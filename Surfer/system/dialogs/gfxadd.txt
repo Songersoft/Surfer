@@ -1,0 +1,81 @@
+0
+control 0
+1
+10
+Confirm
+200
+110
+50
+20
+
+
+400
+Confirm
+
+
+
+
+control 1
+2
+10
+
+5
+80
+160
+20
+
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 2
+6
+10
+
+160
+110
+150
+20
+
+20
+20
+Confirm
+
+
+
+
+control 3
+0
+10
+Name
+5
+65
+60
+20
+1
+
+400
+Confirm
+
+
+
+
+control 4
+0
+10
+Remove from base source
+5
+110
+150
+20
+
+
+400
+Confirm
+
+
+
+

@@ -1,0 +1,27 @@
+;Surfer uses libraries of Human Resource:
+; --- AutoIt
+;       Jonathan Bennett and the AutoIt Team ( http://www.autoitscript.com/autoit3/docs/license.htm )
+; ------------------------ AutoItObject CREDITS: ------------------------
+; Copyright (C) by:
+; The AutoItObject-Team:
+; 	Andreas Karlsson (monoceres)
+; 	Dragana R. (trancexx)
+; 	Dave Bakker (Kip)
+; 	Andreas Bosch (progandy, Prog@ndy)
+; --- SDL_UDF
+;       AdmiralAlkex
+; --- SDL (Simple DirectMedia Layer)
+;	http://www.libsdl.org/
+; --- _RecFileListToArray by Melba23
+; --- MouseOnEvent by G.Sandler
+; --- loaddialog.au3 by Joshua Songer for dialog data from file
+; --- Windows Operating System
+; --- Download and get started programming AutoIt today
+; ( http://www.autoitscript.com/forum/ )
+
+AutoIt code snips from AutoIt Forum or other website
+- - - wakillon provided a easy working example of how to capture mouse wheel events in AutoIt
+I have copied his code and adapted it for my purposes
+http://www.autoitscript.com/forum/topic/124346-wheel-detection/page__hl__+detect%20+wheel%20+event#entry863806
+;PsaltyDS
+;http://www.autoitscript.com/forum/topic/108138-get-controlid-from-focused-control/

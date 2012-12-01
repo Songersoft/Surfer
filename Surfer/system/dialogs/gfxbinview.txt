@@ -1,0 +1,385 @@
+0
+control 0
+2
+10
+
+5
+30
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+0
+
+
+control 1
+1
+10
+<
+50
+30
+35
+20
+1
+
+400
+Select a previos source
+
+
+
+
+control 2
+1
+10
+>
+85
+30
+35
+20
+1
+
+400
+Select the next source
+
+
+
+
+control 3
+2
+10
+
+55
+80
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 4
+1
+6
+\/
+100
+88
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 5
+1
+6
+/\
+100
+75
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 6
+2
+10
+
+150
+80
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 7
+1
+6
+\/
+195
+88
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 8
+1
+6
+/\
+195
+75
+20
+13
+1
+
+400
+Select the next source
+
+
+
+
+control 9
+2
+10
+
+245
+80
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 10
+1
+6
+\/
+290
+88
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 11
+1
+6
+/\
+290
+75
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 12
+0
+10
+Angle
+150
+65
+50
+20
+1
+
+400
+Confirm
+
+
+
+
+control 13
+0
+10
+Frame
+245
+65
+50
+20
+1
+
+400
+Confirm
+
+
+
+
+control 14
+0
+10
+Select gfxBin
+5
+10
+95
+20
+
+
+400
+Confirm
+
+
+
+
+control 15
+0
+10
+Size
+55
+65
+40
+20
+1
+
+400
+Confirm
+
+
+
+
+control 16
+0
+10
+Name
+150
+10
+60
+20
+
+
+400
+Confirm
+
+
+
+
+control 17
+2
+10
+
+150
+30
+160
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 18
+1
+10
+Toggle Colorkey
+5
+115
+120
+20
+1
+
+400
+Toggle the use of a colorkey on this gfx
+
+
+
+
+control 19
+1
+10
+Export to New Source
+5
+145
+160
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 20
+0
+10
+Width
+140
+120
+40
+20
+1
+
+400
+Confirm
+
+
+
+
+control 21
+0
+10
+Height
+225
+120
+40
+20
+1
+
+400
+Confirm
+
+
+
+
+control 22
+2
+10
+
+265
+115
+45
+20
+1
+
+400
+The height of the stored frame.  To change export to New Source and save changes back to gfx.
+1
+
+
+
+control 23
+2
+10
+
+175
+115
+45
+20
+1
+
+400
+The width of the stored frame.  To change export to New Source and save changes back to gfx.
+1
+
+
+

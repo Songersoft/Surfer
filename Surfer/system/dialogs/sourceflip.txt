@@ -1,0 +1,81 @@
+0
+control 0
+1
+10
+<->
+40
+30
+30
+20
+1
+
+400
+Flip the right side to the left side
+
+
+
+
+control 1
+1
+10
+|
+40
+85
+30
+20
+1
+
+400
+Flip the bottom to the top
+
+
+
+
+control 2
+1
+10
+Confirm
+90
+85
+50
+20
+1
+
+400
+Save the changes to the source
+
+
+
+
+control 3
+0
+10
+Flip Y
+5
+65
+50
+20
+1
+
+400
+
+
+
+
+
+control 4
+0
+10
+Flip X
+5
+10
+50
+20
+1
+
+400
+
+
+
+
+

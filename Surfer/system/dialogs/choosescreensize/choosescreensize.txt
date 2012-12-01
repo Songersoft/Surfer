@@ -1,0 +1,161 @@
+0
+control 0
+0
+10
+Window Resolutions
+5
+45
+200
+20
+1
+
+400
+
+
+
+
+
+control 1
+0
+10
+Current Window Resolution
+5
+5
+200
+20
+1
+
+
+
+
+
+
+
+control 2
+0
+10
+scrw
+5
+25
+40
+20
+
+
+
+
+
+
+
+
+control 3
+0
+10
+,
+45
+25
+10
+20
+
+
+
+
+
+
+
+
+control 4
+0
+10
+scrh
+55
+25
+55
+20
+
+
+
+
+
+
+
+
+control 5
+0
+10
+set Width
+5
+175
+60
+20
+
+
+
+
+
+
+
+
+control 6
+2
+10
+
+65
+170
+50
+20
+1
+
+
+
+
+
+
+
+control 7
+0
+10
+set Height
+120
+175
+60
+20
+
+
+
+
+
+
+
+
+control 8
+2
+10
+
+185
+170
+50
+20
+1
+
+
+
+
+
+
+
+control 9
+1
+10
+Set
+240
+170
+40
+20
+
+
+
+Change window to the specific size
+
+
+
+

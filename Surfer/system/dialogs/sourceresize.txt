@@ -1,0 +1,97 @@
+0
+control 0
+2
+10
+
+60
+35
+55
+20
+0
+
+400
+the Width of the new source
+
+
+
+
+control 1
+2
+10
+
+60
+80
+55
+20
+0
+
+400
+the Height of the new source
+
+
+
+
+control 2
+0
+10
+Height
+17
+80
+40
+16
+1
+
+400
+
+
+
+
+
+control 3
+0
+10
+Source Scale
+5
+10
+100
+15
+1
+
+400
+
+
+
+
+
+control 4
+0
+10
+Width
+20
+35
+40
+16
+1
+
+400
+
+
+
+
+
+control 5
+1
+9
+Confirm
+120
+5
+55
+20
+1
+
+400
+Create the new source
+
+
+
+

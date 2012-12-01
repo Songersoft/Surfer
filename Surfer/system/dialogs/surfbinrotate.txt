@@ -1,0 +1,145 @@
+0
+control 0
+5
+9
+Step 1: Select a source.
+5
+20
+300
+80
+
+400
+
+1
+
+1
+
+
+control 1
+1
+10
+Confirm
+255
+105
+50
+20
+
+
+400
+Rotate theis source to a surfbin
+
+
+
+
+control 2
+2
+10
+
+130
+105
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 3
+1
+10
+<
+35
+135
+55
+20
+1
+
+400
+Select a previos source
+
+
+
+
+control 4
+1
+10
+>
+100
+135
+55
+20
+1
+
+400
+Select the next source
+
+
+
+
+control 5
+4
+8
+
+20
+185
+120
+18
+1
+
+Rotate from center, top left, top right or bottom
+
+
+
+
+
+control 6
+0
+10
+Rotate this source
+5
+110
+115
+20
+
+
+400
+Confirm
+
+
+
+
+control 7
+0
+10
+Instructions
+15
+5
+75
+15
+
+
+400
+Confirm
+
+
+
+
+control 8
+0
+10
+Rotation point
+5
+165
+120
+20
+1
+
+400
+
+
+
+
+

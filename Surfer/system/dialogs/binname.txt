@@ -1,0 +1,65 @@
+0
+control 0
+1
+10
+Confirm
+240
+80
+50
+20
+
+
+400
+Confirm
+
+
+
+
+control 1
+2
+10
+
+5
+80
+225
+20
+
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 2
+0
+10
+Name
+5
+65
+60
+20
+1
+
+400
+The name of the rotated images
+
+
+
+
+control 3
+5
+8
+When making objects such as left arm and right arm.  Make sure to use unique names if differant people have differant graphics.
+5
+5
+280
+50
+
+
+400
+1
+
+1
+
+

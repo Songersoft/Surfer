@@ -1,0 +1,113 @@
+0
+control 0
+0
+10
+minanglechange
+10
+10
+120
+20
+1
+
+400
+amount to incroment angle by until >359
+
+
+
+
+control 1
+2
+10
+
+115
+10
+40
+20
+1
+
+400
+
+
+
+
+amount to incroment angle by until >359
+control 2
+6
+10
+Save shrinking frames
+10
+30
+
+400
+save a shrinking size for each angle rotation frame
+220
+20
+amount to incroment angle by until >359
+
+
+
+Save a shrinking size for each angle rotation frame
+control 3
+0
+10
+Percent to shrink
+10
+50
+100
+20
+1
+
+400
+all 0-360 frames at decromenting size
+
+
+
+all 0-360 frames at decromenting size
+control 4
+2
+10
+
+115
+50
+40
+20
+1
+
+400
+
+
+
+
+
+control 5
+0
+10
+Angle start
+170
+10
+90
+20
+1
+
+400
+startangle at this degree
+
+
+
+
+control 6
+2
+10
+
+240
+10
+40
+20
+1
+
+400
+
+
+
+
+amount to incroment angle by until >359

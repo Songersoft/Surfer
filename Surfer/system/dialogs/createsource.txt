@@ -1,0 +1,305 @@
+0
+control 0
+2
+10
+
+60
+35
+55
+20
+1
+
+400
+the Width of the new source
+
+
+
+
+control 1
+2
+10
+
+172
+35
+55
+20
+1
+
+400
+the Height of the new source
+
+
+
+
+control 2
+2
+10
+
+60
+85
+55
+20
+1
+
+400
+starting position of new source
+
+
+
+
+control 3
+2
+10
+
+172
+85
+55
+20
+1
+
+400
+starting position of new source
+
+
+
+
+control 4
+3
+60
+137
+25
+30
+0xE80300
+
+1
+
+
+
+
+
+
+
+control 5
+2
+9
+
+100
+150
+35
+20
+1
+
+400
+red component
+
+
+
+
+control 6
+2
+9
+
+145
+150
+35
+20
+1
+
+400
+green component
+
+
+
+
+control 7
+2
+9
+
+190
+150
+35
+20
+1
+
+400
+blue component of new source color
+
+
+
+
+control 8
+0
+10
+Height
+130
+35
+40
+16
+1
+
+400
+
+
+
+
+
+control 9
+0
+10
+New Source
+5
+10
+100
+15
+1
+
+400
+
+
+
+
+
+control 10
+0
+10
+Background Color
+5
+115
+110
+20
+1
+
+400
+the new source will be this color
+
+
+
+
+control 11
+0
+10
+Red
+100
+135
+45
+16
+1
+
+400
+
+
+
+
+
+control 12
+0
+10
+Green
+145
+135
+45
+16
+1
+
+400
+
+
+
+
+
+control 13
+0
+10
+Blue
+190
+135
+45
+16
+1
+
+400
+
+
+
+
+
+control 14
+0
+10
+Width
+20
+35
+40
+16
+1
+
+400
+
+
+
+
+
+control 15
+0
+10
+Current Location
+5
+65
+100
+20
+1
+
+400
+
+
+
+
+
+control 16
+0
+10
+X
+46
+85
+10
+16
+1
+
+400
+
+
+
+
+
+control 17
+0
+10
+Y
+159
+85
+10
+16
+1
+
+400
+
+
+
+
+
+control 18
+1
+9
+Confirm
+170
+5
+55
+20
+1
+
+400
+Create the new source
+
+
+
+

@@ -1,0 +1,273 @@
+0
+control 0
+2
+10
+
+100
+5
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 1
+1
+10
+<
+145
+5
+35
+20
+1
+
+400
+Select a previos source
+
+
+
+
+control 2
+1
+10
+>
+180
+5
+35
+20
+1
+
+400
+Select the next source
+
+
+
+
+control 3
+2
+10
+
+100
+55
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 4
+1
+6
+\/
+145
+63
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 5
+1
+6
+/\
+145
+48
+20
+13
+1
+
+400
+Select the next source
+
+
+
+
+control 6
+0
+10
+Angle
+100
+40
+50
+20
+1
+
+400
+Confirm
+
+
+
+
+control 7
+0
+10
+Select gfxBin
+5
+10
+95
+20
+
+
+400
+Confirm
+
+
+
+
+control 8
+0
+10
+Size
+5
+40
+40
+20
+1
+
+400
+Confirm
+
+
+
+
+control 9
+2
+10
+
+5
+55
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 10
+1
+6
+/\
+50
+48
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 11
+1
+6
+\/
+50
+63
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 12
+2
+10
+
+195
+55
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 13
+0
+10
+Frame
+195
+40
+50
+20
+1
+
+400
+Confirm
+
+
+
+
+control 14
+1
+6
+/\
+240
+48
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 15
+1
+6
+\/
+240
+63
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 16
+1
+10
+Export to New Source
+5
+100
+160
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+

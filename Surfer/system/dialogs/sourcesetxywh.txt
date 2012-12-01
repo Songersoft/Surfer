@@ -1,0 +1,177 @@
+0
+control 0
+2
+10
+
+35
+30
+55
+20
+1
+
+400
+Relocate the position of source to this location
+
+
+
+
+control 1
+2
+10
+
+125
+30
+55
+20
+1
+
+400
+Relocate the position of source to this location
+
+
+
+
+control 2
+2
+10
+
+35
+85
+55
+20
+1
+
+400
+Resize the canvas Width of source
+
+
+
+
+control 3
+2
+10
+
+125
+85
+55
+20
+1
+
+400
+Resize the canvas Height of source
+
+
+
+
+control 4
+0
+10
+Y
+110
+35
+10
+16
+1
+
+400
+
+
+
+
+
+control 5
+0
+10
+New Location of Source
+5
+10
+145
+15
+1
+
+400
+
+
+
+
+
+control 6
+0
+10
+X
+20
+35
+10
+16
+1
+
+400
+
+
+
+
+
+control 7
+0
+10
+New Size of Source
+5
+65
+140
+20
+1
+
+400
+
+
+
+
+
+control 8
+0
+10
+W
+15
+85
+15
+16
+1
+
+400
+
+
+
+
+
+control 9
+0
+10
+H
+110
+85
+10
+16
+1
+
+400
+
+
+
+
+
+control 10
+1
+9
+Confirm
+190
+5
+55
+20
+
+
+400
+Confirm changes to this source
+
+
+
+

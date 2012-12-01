@@ -1,0 +1,375 @@
+graphics\runner icon2.bmp
+control 0
+3
+0
+0
+320
+200
+0xc0c0c0
+1
+1
+
+
+
+
+
+
+
+control 1
+3
+23
+35
+275
+120
+0x34B4AD
+1
+1
+
+400
+
+
+
+
+
+control 2
+3
+28
+50
+35
+20
+0x000000
+17
+1
+
+
+
+
+
+
+
+control 3
+2
+10
+
+78
+50
+100
+20
+
+
+400
+
+1
+
+
+The decimal value of pixel color found at mouse posistion when sample hotkey is pressed.
+control 4
+2
+10
+
+188
+50
+100
+20
+
+
+400
+
+1
+
+
+The hexidecimal value of pixel color found at mouse posistion when sample hotkey is pressed.
+control 5
+2
+10
+
+78
+100
+60
+20
+1
+
+400
+
+
+
+
+Red component of pixel color under mouse.
+Represented as an integer.
+control 6
+2
+10
+
+148
+100
+60
+20
+1
+
+400
+
+
+
+
+Green component of pixel color under mouse.
+Represented as an integer.
+control 7
+2
+10
+
+218
+100
+60
+20
+1
+
+400
+
+
+
+
+Blue component of pixel color under mouse.
+Represented as an integer.
+control 8
+2
+10
+
+78
+125
+60
+20
+0xffffff
+
+400
+
+1
+
+
+Red component of pixel color under mouse.
+Represented in hexidecimal.
+control 9
+2
+10
+
+148
+125
+60
+20
+0xffffff
+
+400
+
+1
+
+
+Green component of pixel color under mouse.
+Represented in hexidecimal.
+control 10
+2
+10
+
+218
+125
+60
+20
+0xffffff
+
+400
+
+1
+
+
+Blue component of pixel color under mouse.
+Represented in hexidecimal.
+control 11
+0
+10
+Hex value
+188
+35
+60
+17
+1
+
+400
+
+
+
+
+
+control 12
+0
+10
+Decimal value
+78
+35
+85
+17
+1
+
+400
+
+
+
+
+
+control 13
+0
+9
+ GREEN
+148
+80
+45
+17
+0xc0c0c0
+
+900
+
+
+
+
+
+control 14
+0
+9
+ BLUE
+218
+80
+45
+17
+0xc0c0c0
+
+900
+
+
+
+
+
+control 15
+0
+9
+ RED
+78
+80
+45
+17
+0xc0c0c0
+
+900
+
+
+
+
+
+control 16
+0
+10
+Color 
+28
+35
+65
+17
+1
+
+400
+
+
+
+
+
+control 17
+0
+10
+ Integer
+28
+100
+45
+20
+0xffff00
+
+400
+
+
+
+
+
+control 18
+0
+10
+     Hex
+28
+125
+45
+20
+0xffff00
+
+400
+
+
+
+
+
+control 19
+3
+78
+80
+60
+70
+0xc80000
+1
+1
+
+
+
+
+
+
+
+control 20
+3
+148
+80
+60
+70
+0x00c800
+1
+1
+
+
+
+
+
+
+
+control 21
+3
+218
+80
+60
+70
+0x0000c8
+1
+1
+
+
+
+
+
+
+
+control 22
+1
+10
+confirm
+238
+160
+60
+20
+
+
+400
+Confirm the color selection
+
+
+
+

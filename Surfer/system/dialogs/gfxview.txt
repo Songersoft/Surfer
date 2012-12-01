@@ -1,0 +1,305 @@
+0
+control 0
+2
+10
+
+5
+30
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+0
+
+
+control 1
+1
+10
+<
+50
+30
+35
+20
+1
+
+400
+Select a previos source
+
+
+
+
+control 2
+1
+10
+>
+85
+30
+35
+20
+1
+
+400
+Select the next source
+
+
+
+
+control 3
+2
+10
+
+55
+85
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 4
+1
+10
+<
+100
+85
+20
+20
+1
+
+400
+Select a previos source
+
+
+
+
+control 5
+1
+10
+>
+120
+85
+20
+20
+1
+
+400
+Select a previos source
+
+
+
+
+control 6
+2
+10
+
+150
+85
+40
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 7
+1
+6
+\/
+195
+93
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 8
+1
+6
+/\
+195
+75
+20
+13
+1
+
+400
+Select the next source
+
+
+
+
+control 9
+2
+10
+
+245
+85
+40
+20
+
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 10
+1
+6
+\/
+290
+93
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 11
+1
+6
+/\
+290
+75
+20
+13
+1
+
+400
+Select a previos source
+
+
+
+
+control 12
+0
+10
+Y
+150
+65
+50
+20
+1
+
+400
+Confirm
+
+
+
+
+control 13
+0
+10
+rootGfx
+245
+65
+50
+20
+1
+
+400
+Confirm
+
+
+
+
+control 14
+0
+10
+Select gfx
+5
+10
+95
+20
+
+
+400
+Confirm
+
+
+
+
+control 15
+0
+10
+X
+55
+65
+40
+20
+1
+
+400
+Confirm
+
+
+
+
+control 16
+0
+10
+Name
+150
+10
+60
+20
+
+
+400
+Confirm
+
+
+
+
+control 17
+2
+10
+
+150
+30
+160
+20
+1
+
+400
+press ENTER to change or use the buttons below
+
+
+
+
+control 18
+1
+10
+set
+320
+85
+30
+20
+
+
+400
+press ENTER to change or use the buttons below
+
+
+
+

@@ -1,0 +1,961 @@
+0
+control 0
+3
+5
+240
+170
+20
+0xC0C0C0
+1
+
+
+
+
+
+
+
+
+control 1
+3
+5
+185
+170
+20
+0xC0C0C0
+1
+
+
+
+
+
+
+
+
+control 2
+0
+10
+Bounding Box
+5
+170
+120
+20
+1
+
+400
+The calculated bounding box of the source
+
+
+
+The calculated bounding box of the rotated source.
+control 3
+2
+10
+
+25
+240
+50
+20
+1
+
+400
+X position to draw rotated source inside bounding box
+1
+
+
+X position to draw rotated source inside bounding box.
+control 4
+2
+10
+
+115
+240
+50
+20
+1
+
+400
+Y position to draw rotated source inside bounding box
+1
+
+
+Y position to draw rotated source inside bounding box.
+control 5
+2
+10
+
+25
+185
+50
+20
+1
+
+400
+Calculated bounding box Width element
+1
+
+
+Calculated bounding box Width element.
+control 6
+2
+10
+
+115
+185
+50
+20
+1
+
+400
+Calculated bounding box Height element
+1
+
+
+Calculated bounding box Height element.
+control 7
+0
+10
+x
+10
+240
+10
+20
+1
+
+400
+Location to draw at in bounding box
+
+
+
+
+control 8
+0
+10
+y
+100
+240
+10
+20
+1
+
+400
+Location to draw at in bounding box
+
+
+
+
+control 9
+0
+10
+w
+10
+185
+10
+20
+1
+
+400
+Width
+
+
+
+
+control 10
+0
+10
+h
+100
+185
+10
+20
+1
+
+400
+Height
+
+
+
+
+control 11
+0
+10
+Rotation Point
+125
+125
+120
+20
+1
+
+400
+
+
+
+
+
+control 12
+4
+8
+
+125
+140
+120
+18
+1
+
+Choose to rotate the source from the center point, top left, right, or bottom
+
+
+
+
+Choose to rotate the source from the center point, top left, right, or bottom.
+control 13
+2
+10
+
+270
+140
+50
+20
+1
+
+400
+
+
+
+
+Until I work out the math to reconstruct resized sources, this area does nothing.
+control 14
+2
+10
+
+350
+140
+50
+20
+1
+
+400
+
+
+
+
+Until I work out the math to reconstruct resized sources, this area does nothing.
+control 15
+0
+10
+x
+260
+140
+10
+20
+1
+
+400
+
+
+
+
+
+control 16
+0
+10
+y
+340
+140
+10
+20
+1
+
+400
+
+
+
+
+
+control 17
+0
+10
+Angle
+5
+290
+40
+20
+1
+
+400
+
+
+
+
+
+control 18
+2
+10
+
+185
+290
+35
+20
+1
+
+400
+Angle to start rotating from
+
+
+
+The angle to start rotation.
+control 19
+0
+10
+incroment
+100
+275
+90
+20
+1
+
+400
+
+
+
+
+
+control 20
+2
+10
+
+100
+290
+35
+20
+1
+
+400
+amount to change angle by each frame
+
+
+
+The amount of angle change between each frame.
+control 21
+0
+10
+Rotate
+5
+330
+50
+20
+1
+
+400
+You can rotate the image to ensure your settings display properly
+
+
+
+You can rotate the image to ensure your settings display properly
+control 22
+1
+10
+<
+50
+325
+55
+20
+1
+
+400
+View Source rotated LEFT
+
+
+
+
+control 23
+1
+10
+>
+110
+325
+55
+20
+1
+
+400
+View Source rotated RIGHT
+
+
+
+
+control 24
+1
+10
+Confirm
+350
+395
+50
+20
+
+
+400
+Confirm
+
+
+
+
+control 25
+0
+10
+Position to draw in box
+5
+225
+140
+20
+1
+
+400
+The point to start drawing inside the bounding box.
+
+
+
+The point to start drawing inside the bounding box.
+control 26
+0
+10
+delay
+185
+327
+50
+20
+1
+
+400
+
+
+
+
+
+control 27
+1
+10
+Auto
+80
+350
+55
+20
+1
+
+400
+toggle auto Rotation Display
+
+
+
+Toggle on and off auto rotation.
+control 28
+2
+10
+
+185
+344
+40
+20
+1
+
+400
+Delay before each rotation display
+
+
+
+Delay before each Rotation Display
+control 29
+0
+10
+ms
+225
+350
+40
+20
+1
+
+400
+Milliseconds
+
+
+
+
+control 30
+0
+10
+start
+185
+275
+40
+20
+1
+
+400
+Angle to start rotating from
+
+
+
+
+control 31
+2
+10
+
+45
+290
+35
+20
+1
+
+400
+The current angle displayed
+
+
+
+The current angle displayed in the rotation viewer.
+control 32
+0
+10
+current
+45
+275
+120
+20
+1
+
+400
+The current angle displayed
+
+
+
+
+control 33
+3
+200
+185
+170
+20
+0xC0C0C0
+1
+
+
+
+
+
+
+
+
+control 34
+3
+5
+290
+300
+20
+0xC0C0C0
+1
+
+
+
+
+
+
+
+
+control 35
+0
+10
+Custom Box
+200
+170
+120
+20
+1
+
+400
+A custom sized box for your rotated images.
+0
+
+
+A custom sized box for your rotated images.
+control 36
+3
+200
+240
+170
+20
+0xC0C0C0
+1
+
+
+
+
+
+
+
+
+control 37
+0
+10
+w
+205
+185
+10
+20
+1
+
+400
+Width
+
+
+
+
+control 38
+0
+10
+x
+205
+240
+10
+20
+1
+
+400
+Location to draw at in bounding box
+
+
+
+
+control 39
+0
+10
+h
+295
+185
+10
+20
+1
+
+400
+Height
+
+
+
+
+control 40
+0
+10
+y
+295
+240
+10
+20
+1
+
+400
+Location to draw at in bounding box
+
+
+
+
+control 41
+2
+10
+
+220
+185
+50
+20
+1
+
+400
+A custom sized box for your rotated images
+
+
+
+A custom sized box for your rotated images.
+control 42
+2
+10
+
+310
+185
+50
+20
+1
+
+400
+A custom sized box for your rotated images
+
+
+
+A custom sized box for your rotated images.
+control 43
+2
+10
+
+220
+240
+50
+20
+1
+
+400
+Your custom position to draw source inside box
+
+
+
+Your custom position to draw source inside box.
+control 44
+2
+10
+
+310
+240
+50
+20
+1
+
+400
+Your custom position to draw source inside box
+
+
+
+Your custom position to draw source inside box.
+control 45
+0
+10
+Custom Position
+200
+225
+120
+20
+1
+
+400
+
+0
+
+
+
+control 46
+6
+10
+use
+330
+169
+45
+10
+use the custom bounding box
+
+15
+
+0
+
+
+
+control 47
+6
+10
+use
+330
+224
+45
+10
+use the custom position
+
+15
+
+0
+
+
+
+control 48
+2
+10
+
+5
+140
+30
+20
+1
+
+400
+Current Source to create rotated images from
+
+
+
+
+control 49
+0
+10
+Selected Source
+5
+125
+120
+20
+1
+
+400
+
+
+
+
+
+control 50
+1
+10
+<
+40
+140
+35
+20
+1
+
+400
+rotate a previous source
+
+
+
+
+control 51
+1
+10
+>
+75
+140
+35
+20
+1
+
+400
+rotate the next source
+
+
+
+
+control 52
+2
+10
+
+250
+290
+35
+20
+1
+
+400
+Angle to stop rotating at
+
+
+
+The last angle in rotation.
+control 53
+0
+10
+end
+250
+275
+40
+20
+1
+
+400
+Angle to stop rotating at
+
+
+
+
+control 54
+3
+240
+395
+102
+20
+0xC0C0C0
+1
+
+
+
+
+
+
+
+
+control 55
+0
+10
+binframe
+190
+395
+50
+20
+1
+
+400
+
+
+
+
+
+control 56
+2
+10
+
+242
+395
+35
+20
+1
+
+400
+The index to start adding rotation frames from
+
+
+
+The index to start adding rotation frames from.
+control 57
+0
+10
+insert at
+240
+380
+120
+20
+1
+
+400
+The current angle displayed
+
+
+
+
+control 58
+6
+10
+Remove from base source
+5
+395
+50
+20
+If this box is checked, all non transparent pixels are removed from the base source
+180
+Turns nontransparent pixels to transparent pixes on base source
+
+
+
+
+If this box is checked, all non transparent pixels are removed from the base source.
+control 59
+5
+10
+This window lets you test and create a storage of rotated source images.                                                                     1. Choose a source to rotate                                                2. Choose a point to rotate the source from                            3. Decide the positioning / area of the rotated images to store    4. Use the auto rotater to make sure images will display properly
+5
+5
+395
+120
+
+400
+
+1
+
+1
+
+This window lets you test and create a storage of rotated source images.                                                                     1. Choose a source to rotate                                                2. Choose a point to rotate the source from                            3. Decide the positioning / area of the rotated images to store    4. Use the auto rotater to make sure images will display properly

@@ -1,0 +1,126 @@
+Finding an Angle
+
+Date: 08/09/2002 at 08:43:00
+From: Timo Petmanson
+Subject: Sine and cosine maths
+
+Hello, 
+
+I need to know how to calculate an angle between two 2D points. I know 
+how to calculate a new point by angle, but I can't figure out how 
+otherwise.
+
+Calculating by angle:
+
+a = 143 // this is the angle
+x = 1   // 2d point x coord
+y = 1   // 2d point y coord
+u = 3   // how many units we change coords
+
+So, if we want to change point's coordinates by angle, then we must 
+do:
+
+x = x + SIN(a * (pi / 180)) * u  // (pi / 180)radians to degrees
+y = y + COS(a * (pi / 180)) * u  // I hope I didn't change sin and cos
+
+but what must I do to calculate the angle?
+
+x1 = 1
+y1 = 1
+x2 = (-1)
+y2 = (-5)
+
+0
+|      (x2,y2)
+|      /
+|angle/
+|    /
+|   /
+|  /
+| /
+(x1,y1)------------ 90
+|
+|
+|
+|
+|
+|
+|
+180
+
+I hope you understood my problem. Thanks.
+
+Timo
+
+Date: 08/09/2002 at 09:48:14
+From: Doctor Rick
+Subject: Re: Sine and cosine maths
+
+Hi, Timo.
+
+Yes, I understand: you know how to find the coordinates of a point 
+given the starting point, angle and distance, but you don't know how 
+to do the reverse - calculate the angle given the starting point and 
+ending point. (You probably do know how to calculate the distance.)
+
+We can take your equations as a starting point. You did have sin and 
+cos interchanged, if the angle is measured counterclockwise from the 
+positive x axis as we usually do. I'll call the two points (x1,y1) 
+and (x2,y2).
+
+  x2 = x1 + cos(a * (pi / 180)) * u
+  y2 = y1 + sin(a * (pi / 180)) * u
+
+Subtract the starting point coordinates:
+
+  x2 - x1 = cos(a * (pi / 180)) * u
+  y2 - y1 = sin(a * (pi / 180)) * u
+
+Divide the second equation by the first:
+
+  (y2-y1)/(x2-x1) = (sin(a*pi/180)*u)/(cos(a*pi/180)*u)
+
+What is sin/cos? It's the tangent.
+
+  (y2-y1)/(x2-x1) = tan(a*pi/180)
+
+We can find the angle by taking the inverse tangent (arctan) of both 
+sides:
+
+  a*pi/180 = arctan((y2-y1)/(x2-x1))
+
+  a = 180/pi * arctan((y2-y1)/(x2-x1))
+
+There's your formula. However, there are some tricky things to add. 
+One is that x2 may equal x1, and you'll get a divide-by-zero error. 
+Another is that the arctan won't distinguish between the angle from 
+point 1 to point 2 and the angle from point 2 to point 1. These should 
+be 180 degrees apart, but they will come out identical. In summary, to 
+do it right, you need to consider separate cases for x2-x1 negative, 
+zero or positive.
+
+It looks as if you're writing a program in C++. If so, check out the 
+function atan2(y,x). It computes the arctangent of y/x, and it takes 
+care of those special cases too, because it is designed for exactly 
+the sort of thing you are doing.
+
+- Doctor Rick, The Math Forum
+  http://mathforum.org/dr.math/ 
+
+Date: 08/20/2002 at 14:10:09
+From: Timo Petmanson
+Subject: Thank you (sine and cosine maths)
+
+Thanks, that helped me.  I was working on a computer game and I needed 
+that formula for the movements.
+
+so, time for a little math :)
+
+A, B -> points
+v = B-A ->vector from A to B
+vx -> x axis
+alpha -> angle between v and vx
+
+v . vx
+--------- = cos alpha
+|v| . |vx|
