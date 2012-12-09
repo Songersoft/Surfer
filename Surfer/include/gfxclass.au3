@@ -4,24 +4,34 @@
 #include "surfer.global.au3"
 #include <..\..\include lib\loaddialog.au3>
 func getgfxwindow()
-	$x= $gfxcur-1
-	if $x< 0 then $x= $gfxs-1
-	for $i= $x to 0 step -1
-		if mouseoverrect($gfx[$i].drawx, $gfx[$i].drawy, $gfx[$i].w, $gfx[$i].h)= 1 then
-			if $i> $gfxmax-1 then return -1
-			return $i
-		endif
-	next
+	if $gfxs> 0 then
+		$x= $gfxcur-1
+		if $x< 0 then $x= $gfxs-1
+		$y= 0
+		for $i= $x to 0 step -1
+			if mouseoverrect($gfx[$i].drawx, $gfx[$i].drawy, $gfx[$i].w, $gfx[$i].h)= 1 then
+				if $i> $gfxmax-1 then return -1
+				return $i
+			endif
+			$y+= 1
+		next
+		for $i= $gfxs-1 to $x step -1
+			if mouseoverrect($gfx[$i].drawx, $gfx[$i].drawy, $gfx[$i].w, $gfx[$i].h)= 1 then
+				if $i> $gfxmax-1 then return -1
+				return $i
+			endif
+		next
+	endif
 	return -1
 EndFunc;end getgfxwindow()
 
 func binobject($iStartup = False)
 	local $oObj = _AutoItObject_Create()
-	_AutoItObject_AddProperty($oObj, "name", $ELSCOPE_Public, "default");when adding objects name can be used to decide were the object is
+	_AutoItObject_AddProperty($oObj, "name", $ELSCOPE_Public, "gfxbin default");when adding objects name can be used to decide were the object is
 	;_AutoItObject_AddProperty($oObj, "w", $ELSCOPE_Public, 0)
 	;_AutoItObject_AddProperty($oObj, "h", $ELSCOPE_Public, 0)
 	_AutoItObject_AddProperty($oObj, "colorkey", $ELSCOPE_Public, 0)
-	_AutoItObject_AddProperty($oObj, "gfxbinid", $ELSCOPE_Public, 0)
+	_AutoItObject_AddProperty($oObj, "binid", $ELSCOPE_Public, 0)
 	_AutoItObject_AddProperty($oObj, "surfbintype", $ELSCOPE_Public, 0)
 	_AutoItObject_AddProperty($oObj, "scalemax", $ELSCOPE_Public, 0)
 	_AutoItObject_AddProperty($oObj, "anglemax", $ELSCOPE_Public, 0)
@@ -65,24 +75,23 @@ func bino_anglemake($os, $type, $sourceobj, $dsurf, $px, $py, $drawx, $drawy, $a
 	endswitch
 	$os.anglemax= $angleframe- 1
 	$os.name= $name
-	$os.gfxbinid= $gfxbins
+	$os.binid= $gfxbins
 	$gfxbins+= 1
 EndFunc
 
 func bino_save($os)
 	local $overwrite= 1
 	$fp= @scriptdir&"\..\output\gfxbin\"&$os.name&"\"
-	if fileexists($fp) then
-		out("file exists")
-		$i= msgbox(3, "Overwrite gfxbin "&$os.name, "The gfx name "&$os.name& "already exists"&@crlf&"Continuing will over write the old gfxbin", default, $hgui)
-		if $i= 7 or $i= 2 then $overwrite= 0
-	endif
+	;if fileexists($fp) then
+	;	$i= msgbox(3, "Overwrite gfxbin "&$os.name, "The gfx name "&$os.name& " already exists"&@crlf&"Continuing will over write the old gfxbin", default, $hgui)
+	;	if $i= 7 or $i= 2 then $overwrite= 0
+	;endif
 
 	out("save bin "&$fp)
 	if $overwrite= 1 then
 		dircreate(@scriptdir&"\..\output");force output dir
 		dircreate(@scriptdir&"\..\output\gfxbin");force sub dir
-		dircreate(@scriptdir&"\..\output\gfxbin\"&$os.name&"\");
+		dircreate(@scriptdir&"\..\output\gfxbin\"&$os.name);create variable folder name equal to object name
 		$file= fileopen($fp&"bindata.txt", 2);create data file
 		filewriteline($file, $os.name)
 		filewriteline($file, $os.colorkey)
@@ -94,17 +103,28 @@ func bino_save($os)
 		for $i= 0 to $os.scalemax
 			for $ii= 0 to $os.anglemax
 				for $iii= 0 to $os.framemax
-					if $gfxbin[$os.gfxbinid][$i][$ii][$iii]<> "" then
-						_SDL_SaveBMP($gfxbin[$os.gfxbinid][$i][$ii][$iii], $fp&$i&"_"&$ii&"_"&$iii&".bmp")
+					if $gfxbin[$os.binid][$i][$ii][$iii]<> "" then
+						_SDL_SaveBMP($gfxbin[$os.binid][$i][$ii][$iii], $fp&$i&"_"&$ii&"_"&$iii&".bmp")
 					endif
 				next
 			next
 		next
+		out("saved "&$i*$ii*$iii&" pics")
 	endif
 EndFunc
 
-func bino_load($os)
-	$fp= @scriptdir&"\..\output\gfxbin\"&$gfx[$gfxbins].binname&"\"
+func bino_load($os, $fn)
+	out("find name passed in"&$fn)
+	;$fp= @scriptdir&"\..\output\gfxbin\"&$gfx[$gfxbins].binname&"\"
+	;if name path exists use it
+	;if name path doesn't exist load from output\gfxbin
+	if fileexists($fn)= 1 then;if the data file exists then
+		$strmark= stringinstr($fn, "\", 0, -1)
+		$str= stringmid($fn, 1, $strmark)
+		$fp= $str
+	else
+		$fp= @scriptdir&"\..\output\gfxbin\"&$fn&"\"
+	endif
 	out($fp)
 	if fileexists($fp) then
 		$file= fileopen($fp&"bindata.txt")
@@ -118,34 +138,20 @@ func bino_load($os)
 		for $i= 0 to $os.scalemax
 			for $ii= 0 to $os.anglemax
 				for $iii= 0 to $os.framemax
+					if $gfxbin[$gfxbins][$i][$ii][$iii]<> 0 then _SDL_FreeSurface($gfxbin[$gfxbins][$i][$ii][$iii])
 					$gfxbin[$gfxbins][$i][$ii][$iii]= _IMG_Load($fp&$i&"_"&$ii&"_"&$iii&".bmp")
 					_SDL_SetColorKey($gfxbin[$gfxbins][$i][$ii][$iii], $_SDL_SRCCOLORKEY, $os.colorkey)
 				next
 			next
 		next
+		$gfxbindata[$gfxbins].binid= $gfxbins
 		$gfxbins+= 1
 	else
-		msgbox(0, "File not found", "Could not find the gfxbin file", default, $hgui)
+		msgbox(0, "File not found", "Could not find "&$gfx[$gfxbins].binname&" gfxbin file", default, $hgui)
+		return 0
 	endif
+	return 1
 EndFunc
-;~ func surfbinload($path= "")
-;~ 	if $path= "" then $path= fileopendialog("Load a surfbin type", @scriptdir&"\..\objects\", "txt (*.txt)")
-;~ 	;$path= @scriptdir&"\..\objects\tank\body\"
-;~ 	$file= fileopen($path&"surfbindata.txt")
-;~ 	$gfxanglemax "&$surfbindata[0].anglemax)
-;~ 	out("framemax "&$gfxbindata[0].framemax)
-;~ 	fileclose($file)
-;~ 	for $a= 0 to $gfxbindata[0].anglemax-1
-;~ 		for $i= 0 to $gfxbindata[0].framemax-1
-;~ 			if $gfxbindata[0].framemax= 1 then
-;~ 				$gfxbin[$gfxbins][$a][$i]= _SDL_LoadBMP($path&$a&".bmp")
-;~ 			else
-;~ 				$gfxbin[$gfxbins][$a][$i]= _SDL_LoadBMP($path&$a&"_"&$i&".bmp")
-;~ 			endif
-;~ 			_SDL_SetColorKey($gfxbin[$gfxbins][$a][$i], $_SDL_SRCCOLORKEY, _SDL_MapRGB($screen, 0x00, 0x00, 0x00))
-;~ 		next;frame
-;~ 	next;angle
-;~ EndFunc
 
 func gfxobject($iStartup = False)
 	local $oObj = _AutoItObject_Create()
@@ -202,7 +208,9 @@ func gfxo_make($os, $binid, $binname, $rootgfx= -1, $scale= 0, $angle= 0, $frame
 	$gfxs+= 1
 EndFunc
 
-func gfxo_save($os, $file)
+func gfxo_save($os)
+	dircreate(@scriptdir&"\..\output\gfx")
+	$file= fileopen(@scriptdir&"\..\output\gfx\"&$os.name&".txt", 2);create data file
 	filewriteline($file, $os.name)
 	filewriteline($file, $os.rootgfx)
 	filewriteline($file, $os.x)
@@ -216,13 +224,16 @@ func gfxo_save($os, $file)
 	filewriteline($file, $os.fromsource);needs to store the name
 	filewriteline($file, $os.adjust.x)
 	filewriteline($file, $os.adjust.y)
-	filewriteline($file, $os.dragdisx)
-	filewriteline($file, $os.dragdisy)
-	filewriteline($file, $os.nodrag)
-	filewriteline($file, $os.dragn)
+	filewriteline($file, $os.dragdisx);remove from save
+	filewriteline($file, $os.dragdisy);remove from save
+	filewriteline($file, $os.nodrag);remove from save
+	filewriteline($file, $os.dragn);remove from save
+	fileclose($file)
 EndFunc
 
-func gfxo_load($os, $file)
+func gfxo_load($os, $fn);whole file name passed in
+	;load the file specified
+	$file= fileopen($fn)
 	$os.name= filereadline($file)
 	if @error<> 0 then return 1
 	$os.rootgfx= filereadline($file)
@@ -236,7 +247,6 @@ func gfxo_load($os, $file)
 	$os.h= filereadline($file)
 	if @error<> 0 then return 1
 	$os.binname= filereadline($file);needs to become name
-	out($os.binname)
 	if @error<> 0 then return 1
 	$os.scale= filereadline($file)
 	if @error<> 0 then return 1
@@ -258,6 +268,8 @@ func gfxo_load($os, $file)
 	if @error<> 0 then return 1
 	$os.dragn= filereadline($file)
 	if @error<> 0 then return 1
+	fileclose($file)
+
 	local $found= 0
 	for $i= 0 to $gfxbins-1;check if bin exists
 		if $os.binname= $gfxbindata[$i].name then
@@ -268,9 +280,9 @@ func gfxo_load($os, $file)
 	next
 	if $found= 0 then;if not found add the gfxbin data
 		$os.binid= $i
-		$gfxbindata[$gfxbins].load()
+		$found= $gfxbindata[$gfxbins].load($os.binname)
 	endif
-	$gfxs+= 1
+	if $found= 1 then $gfxs+= 1
 	return 0
 EndFunc
 
@@ -373,7 +385,8 @@ func gfxview()
 		endswitch
 		if _ispressed("0d") then
 			$redraw= 1
-
+			$gfx[$gfxcur].name= guictrlread($control[17][0])
+			$gfxcur= guictrlread($control[0][0]);read a new $gfxcur
 		endif
 		if _ispressed(1) then
 			for $i= $gfxs-1 to 0 step -1;always start dragging the last window drawn
@@ -407,7 +420,7 @@ func gfxview()
 	;if $win3.surf<> 0 then _SDL_FreeSurface($win3.surf)
 	guidelete($win2)
 	$scrolllayersenabled= 1
-EndFunc;makegfx()
+EndFunc;gfxview()
 
 func gfxcontextmenu($i)
 	local $xx= $mousex, $yy= $mousey, $cur= -1
@@ -439,14 +452,6 @@ func gfxcontextmenu($i)
 				endif
 			endif
 		case 1
-;~ 			do
-;~ 				if _ispressed(26) then $gfx[$i].y= $gfx[$i].y-1;up
-;~ 				if _ispressed(28) then $gfx[$i].y= $gfx[$i].y+1;down
-;~ 				if _ispressed(25) then $gfx[$i].x= $gfx[$i].x+1;left
-;~ 				if _ispressed(27) then $gfx[$i].x= $gfx[$i].x+1;rgiht
-
-;~ 				if _ispressed(10) then sleep(100)
-;~ 			until _ispressed("0d")
 	endswitch
 EndFunc
 

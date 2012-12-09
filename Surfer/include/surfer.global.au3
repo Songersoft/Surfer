@@ -10,7 +10,7 @@
 ;~ #include <Color.au3>
 ;~ #include "..\..\include lib\_arrayrandom.au3"
 ;~ #include "..\..\include lib\loaddialog.au3"
-;~ #include "..\..\include lib\SDL_Template.au3"
+;~ #include "..\..\include lib\SDL_workspace.au3"
 ;~ #include "..\..\include lib\RecFileListToArray.au3";melba23
 ;~ #include "Sound.au3"
 global $debug= 0
@@ -19,14 +19,15 @@ global $videoflags= 0;bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE)
 global $hgui= 0
 ;specal listbox to capture double click selection
 global $mylistbox= 0, $mylistboxmsg= 0
-global $fullscreen= 0
+global $fullscreen= 0, $noresize= 100
+global $screenoffsets= 0
 ;colors
 global $bgcolor= 0
 global $colorblack= 0
 global $defaultcolorkey= 0
 ;file dialog memory
 global $sourcelastload= @MyDocumentsDir&"\"
-global $sourcelasttemplate= @scriptdir&"\..\templates\"
+global $sourcelastworkspace= @scriptdir&"\..\workspaces\"
 global $outputpath= "", $outputname= ""
 global $sourcesonscreen= 0
 global $pausecontrols=0, $pausecontrolsmax= 50
@@ -58,6 +59,7 @@ global $wsource= 3
 global $wmouse= 4
 global $wmusic= 5
 global $wgfx= 6
+global $sourcemax= 80, $source[$sourcemax], $sources= 0, $sourcecur= 0
 ;global $sources= 0
 ;global $sourcecur= 0
 ;global $surfbinmax= 50, $surfbinsizemax= 10, $surfbinanglemax= 180, $surfbinframemax= 10
@@ -79,10 +81,6 @@ global $redraw= 1
 
 global $sourcecontextmenu= 0
 global $sourcecontextmenusurf, $sourcecontextmenusurfw= 0, $sourcecontextmenusurfh= 0
-;make putput directory
-$outputpath= @scriptdir&"\..\output"
-$outputname= "default"
-dircreate($outputpath&"\"&$outputname)
 ;createsource() global variables
 global $sourcecreatex= 10, $sourcecreatey= 10, $sourcecreatew= 50, $sourcecreateh= 50, $sourcecreatebgcolor= 0
 

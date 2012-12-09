@@ -279,7 +279,7 @@ control 17
 30
 160
 20
-1
+
 
 400
 press ENTER to change or use the buttons below

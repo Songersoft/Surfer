@@ -13,7 +13,6 @@ func setcolordialog($color, $caption= "")
 	dim $control[$controls][2]
 	$controls= 0
 	loaddialogdata(@scriptdir&"\system\dialogs\set color.txt", $control, $controls)
-	out("controls "&$controls)
 	guictrlsetbkcolor($control[2][0], $color)
 	guictrlsetdata($control[5][0], _colorgetred($color))
 	guictrlsetdata($control[6][0], _colorgetgreen($color))
@@ -31,7 +30,6 @@ func setcolordialog($color, $caption= "")
 				$confirm= 1
 				exitloop
 			case $control[2][0];select color dialog and color display graphic
-				out("color "&$color)
 				$color= _ChooseColor(2, $color, 2)
 				if $color<> -1 then
 					$redraw= 1
@@ -181,7 +179,6 @@ func sourcecreate()
 	dim $control[$controls][2]
 	$controls= 0
 	loaddialogdata(@scriptdir&"\system\dialogs\createsource.txt", $control, $controls)
-	out("controls "&$controls)
 	guictrlsetdata($control[0][0], $sourcecreatew)
 	guictrlsetdata($control[1][0], $sourcecreateh)
 	guictrlsetdata($control[2][0], $sourcecreatex)
@@ -194,9 +191,7 @@ func sourcecreate()
 	$confirm= 0
 	$itime= timerinit()
 	$tempwindow= windowobject()
-	out("sources saved "&$sources)
 	$temp= $source[$sources].win.copywindow()
-	out("temp winX "&$temp[0])
 	$source[$sources].win.makewindow(0, $sourcecreatex, $sourcecreatey, $sourcecreatew, $sourcecreateh, 255)
 	sourceadd()
 	$color= $sourcecreatebgcolor
@@ -234,9 +229,7 @@ func sourcecreate()
 		endif
 		if _ispressed(1) then
 			for $i= $sourcesonscreen-1 to 0 step -1;always start dragging the last window drawn
-				out("drag i "&$i)
 				$source[$i].win.drag()
-				out("source x"&$source[$i].win.x&" "&"source y"&$source[$i].win.y)
 			next
 		else
 			$dragn= 0
@@ -282,8 +275,6 @@ func sourcecreate()
 	else
 		$sources-= 1
 		if $sources< 0 then $sources= $sourcemax-1
-		out("sources returned"&$sources)
-		out("temp winX "&$temp[0])
 		$source[$sources].win.pastewindow($temp)
 		$sourcesonscreen-= 1
 	endif
@@ -299,13 +290,11 @@ func choosescreensize()
 	dim $control[$controls][2]
 	$controls= 0
 	loaddialogdata(@scriptdir&"\system\dialogs\choosescreensize\choosescreensize.txt", $control, $controls)
-	out($controls)
 	$mylistbox= guictrlcreatelist("", 5, 65, 200, 100, bitor($LBS_NOTIFY, $WS_VSCROLL))
 	$file= fileopen(@scriptdir&"\system\dialogs\choosescreensize\resolution list.txt")
 	while 1
 		$line= filereadline($file)
 		if @error<> 0 then exitloop
-		out($line)
 		guictrlsetdata($mylistbox, $line)
 	wend
 	fileclose($file)
@@ -314,8 +303,7 @@ func choosescreensize()
 	guictrlsetdata($control[4][0], $screenh)
 	guictrlsettip($mylistbox, "double click to select size")
 	guisetstate()
-	$w= 0
-	$h= 0
+	local $w= 0, $h= 0, $confirm= 0
 	while 1
 		switch guigetmsg()
 			case $gui_event_close
@@ -323,27 +311,30 @@ func choosescreensize()
 			case $control[9][0]
 				$w= int(guictrlread($control[6][0]))
 				$h= int(guictrlread($control[8][0]))
-				exitloop
+				$confirm= 1
 		endswitch
 		if $mylistboxmsg= 1 then
 			$mylistboxmsg= 0
 			$line= guictrlread($mylistbox)
 			$w= stringmid($line, 1, stringinstr($line, ",")-1)
 			$h= stringmid($line, stringinstr($line, ",")+1)
-			exitloop
+			$confirm= 1
 		endif
+		if $confirm= 1 then exitloop
 	wend
-	if $w< 1 then
-		$w= $screenw
-	elseif $w< 200 then
-		$w= 200
+	if $confirm= 1 then
+		if $w< 1 then
+			$w= $screenw
+		elseif $w< 200 then
+			$w= 200
+		endif
+		if $h< 1 then
+			$h= $screenh
+		elseif $h< 75 then
+			$h= 75
+		endif
+		changescreensize($w, $h)
 	endif
-	if $h< 1 then
-		$h= $screenh
-	elseif $h< 75 then
-		$h= 75
-	endif
-	changescreensize($w, $h)
 	guictrldelete($mylistbox)
 	guidelete($win2)
 EndFunc;end choosescreensize()
@@ -445,7 +436,6 @@ func sourcerotate($sourceid)
 		endif;endif enter
 		if $redraw= 1 then
 			$redraw= 0
-			out("newsize: "&$newsize)
 			_SDL_FillRect($screen, 0, _SDL_MapRGB($screen, 100, 0, 0));clear the screen surface
 			;$temprect= _SDL_Rect_Create($sourcerect.x, $sourcerect.y, $sourcerect.w, $sourcerect.h)
 			;_SDL_BlitSurface($source[0], 0, $screen, $temprect)
@@ -552,7 +542,6 @@ func sourceflipdialog($sourceid)
 	$twin= _SDL_DisplayFormat($source[$sourceid].win.surf)
 	$confirm= 0
 	while 1
-		out("loop")
 		$msg= guigetmsg()
 		switch $msg
 			case $gui_event_close
@@ -578,7 +567,6 @@ func sourceflipdialog($sourceid)
 			$dragn= 0
 		endif
 		if $redraw= 1 then
-			out("redraw")
 			$redraw= 0
 			_SDL_FillRect($screen, 0, $bgcolor);clear the screen surface
 			for $i= 0 to $sourcesonscreen-1;draw windows
@@ -600,7 +588,7 @@ func sourceflipdialog($sourceid)
 	_SDL_FreeSurface($twin)
 	$redraw= 1
 	guidelete($win2)
-EndFunc
+EndFunc;sourceflipdialog()
 
 func sourceresizedialog($sourceid)
 	$win2= guicreate("Resize Source", 200, 120, default, default, default, default, $hgui)
@@ -627,7 +615,7 @@ func sourceresizedialog($sourceid)
 	endif
 	$redraw= 1
 	guidelete($win2)
-EndFunc
+EndFunc;sourceresizedialog()
 
 func gfxbinrotate()
 	$scrolllayersenabled= 0
@@ -684,9 +672,7 @@ func gfxbinrotate()
 				if $a[2]= 1 then; check for left button down to select field
 					for $i= 0 to $controls-1
 						if $control[$i][0]= $a[4] then
-							;out("value "&$control[$i][1])
 							if $control[$i][1]= @CRLF then
-								;beep()
 								guictrlsetdata($control[59][0], $control[59][1])
 							else
 								guictrlsetdata($control[59][0], $control[$i][1])
@@ -821,7 +807,7 @@ func gfxbinrotate()
 				surfget($dsurf, $ww, $hh)
 				$gfxbindata[$gfxbins].anglemake(0, $source[$scur], $dsurf, $px, $py, $qx, $qy, $rotanginc, $astart, $aend, $binstart, $source[$scur].colorkey, $binname)
 				surfget($gfxbin[$gfxbins-1][0][0][0], $w, $h)
-				$gfxname= "gfx_"&$gfxs
+				$gfxname= "gfx_"&$binname
 				switch $rottype
 				case 0
 					$dx= $dsurfw-$source[$scur].filew
@@ -947,7 +933,7 @@ func invertcolorkey($sourceid)
 	;showsurf($dsurf)
 	;sleep(3000)
 	return $dsurf
-EndFunc
+EndFunc;invertcolorkey()
 
 func usernamebin()
 	local $controls= 0, $tname= "", $no= 1, $confirm= 0
@@ -969,10 +955,11 @@ func usernamebin()
 				keyreleased("0d")
 				if $tname<> -1 then
 					for $i= 0 to $gfxs-1
-						out("i "&$i&" gfxs-1= "&$gfxs-1)
 						if $gfxbindata[$i].name= $tname then
 							$no= 1
-							msgbox(0, "duplicate name", "This name is already used")
+							if msgbox(3, "duplicate name", "This name is already used"&@crlf&"Over write "&$tname&" ?")= 6 then
+								$no= 0
+							endif
 							keyreleased("0d")
 							exitloop
 						endif
@@ -982,6 +969,120 @@ func usernamebin()
 		endswitch
 	wend
 	guidelete($win4)
-	out("name tname "&$tname)
 	return $tname
+EndFunc;usernamebin()
+
+func gfxbinload()
+	$fn= fileopendialog("Load gfxbin", @scriptdir&"\..\output\gfxbin\", "txt gfxbindata file(*.txt)", default, "", $hgui)
+	if @error= 0 then
+		$gfxbindata[$gfxbins].load($fn)
+	else
+		msgbox(0, "File not found", "Gfxbin file not found", default, $hgui)
+	endif
+EndFunc;end gfxbinload()
+
+func gfxload()
+	$fn= fileopendialog("Load gfx", @scriptdir&"\..\output\gfx", "txt gfx file(*.txt)", 4, "", $hgui)
+	if @error= 0 then
+		;$gfx[$gfxs].load($fn)
+		$filedrop= stringsplit($fn, "|")
+		if $filedrop[0]= 1 then; just one file
+			if $source[$sources].load($fn)<> -1 then
+				;out("loaded source at "&$sources)
+				;sourcenextname($sources, 1)
+				;sourceadd()
+				$gfx[$gfxs].load($fn)
+				$redraw= 1
+				;$sourcelastload= $fn
+			endif
+		elseif $filedrop[0]> 1 then; we have more than 1 file
+			;local $xloc= _sge_Random(5, 15), $yloc= _sge_Random(5, 15)
+			$path= $filedrop[1]&"\"; give path a trailing "\"
+			for $ii= 2 to $filedrop[0]; one, two, skip a few (start past [0]file count, [1]path to folder)
+				$tpath= $path&$filedrop[$ii]
+				if $gfx[$gfxs].load($tpath)= 0 then
+					;sourceadd()
+					$redraw= 1
+					;$sourcelastload= $tpath
+				endif
+			next;next file in filedrop
+		endif
+	endif;endif filedrop[]
+	drawgfxwindow()
+EndFunc;end gfxload()
+
+func exitdialog();a dialog shown when user exits program, gives the user some workspace save options.
+	local $controls= 0, $confirm= 0
+	$loc= wingetpos($hgui);record mommy's location
+	$win2= guicreate("Exit Options", 400, 400, $loc[0]+200, $loc[1]+200, default, default, $hgui)
+	$control= loaddialogquick(@scriptdir&"\system\dialogs\exit options.txt", $controls)
+	;guictrlsetstate($control[1][0], $gui_focus)
+	if $sourcesonscreen< 1 then
+		guictrlsetstate($control[1][0], $gui_disable)
+		guictrlsetstate($control[2][0], $gui_disable)
+	endif
+	if $gfxbins< 1 then guictrlsetstate($control[3][0], $gui_disable)
+	guisetstate()
+	do
+		$msg= guigetmsg()
+		switch $msg
+			case $control[0][0]
+				$confirm= 1
+				exitloop
+		endswitch
+	until $msg= -3
+	if $confirm= 1 then
+		$filepath= @scriptdir&"\..\workspaces\lastsources.txt"
+		if guictrlread($control[1][0])=1 then
+			$file= fileopen($filepath, 2)
+			if $file<> -1 then
+				for $i= 0 to $sourcesonscreen-1
+					if fileexists($source[$i].filepath)= 1 then
+						$source[$i].filesave($file)
+					endif
+				next
+			endif
+			fileclose($file)
+		endif
+		if guictrlread($control[2][0])=1 then
+			$endpath= stringinstr($filepath, "\", 0, -1)
+			$path= stringmid($filepath, 1, $endpath)
+			$dot= stringinstr($filepath, ".", 0, -1)
+			$name= stringmid($filepath, $endpath+1, $dot-$endpath-1)
+			dircreate($path&$name)
+			for $i= 0 to $sources-1
+				$source[$i].filepath= $path&$name&"\"&$source[$i].nameid&".bmp"
+				_SDL_SaveBMP($source[$i].surf, $source[$i].filepath)
+			next
+		endif
+		if guictrlread($control[3][0])=1 then
+			for $i= 0 to $gfxbins-1
+			out("Saveing gfxbin "&$i)
+			$gfxbindata[$i].save()
+		next
+		if $gfxs> 0 then
+			for $i= 0 to int($gfxs)-1
+				$gfx[$i].save()
+			next
+		endif
+		endif
+		return 1
+	endif;endif confirm= 1
+	guidelete($win2)
+	return 0
 EndFunc
+
+;~ if msgbox(3, "Save gfxbins", "Save loaded gfxs", $hgui)= 6 then
+;~ 	out("gfxbins to save: "&$gfxbins)
+;~ 	for $i= 0 to $gfxbins-1
+;~ 		out("Saveing gfxbin "&$i)
+;~ 		$gfxbindata[$i].save()
+;~ 	next
+;~ 	if $gfxs> 0 then
+;~ 		;$file= fileopen(@scriptdir&"\..\output\gfxbin\gfxdata.txt", 2);create data file
+;~ 		for $i= 0 to int($gfxs)-1
+;~ 			$gfx[$i].save()
+;~ 		next
+;~ 		;fileclose($file)
+;~ 	endif
+;~ endif

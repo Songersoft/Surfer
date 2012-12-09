@@ -47,21 +47,27 @@ func makemousewindow()
 EndFunc
 
 func makegfxwindow()
-	$win[$wgfx].makewindow(1, 210, $screenh-150, 280, 95, 100, 155, -1, 0, 1, 1);selection info window
+	$win[$wgfx].makewindow(1, 210, $screenh-115, 280, 95, 100, 155, -1, 0, 1, 1);selection info window
 	print("GFX ", $win[$wgfx].surf, 5, 5)
 	print("Name ", $win[$wgfx].surf, 5, 5+$font.h)
-	print("Size    Angle     Frame", $win[$wgfx].surf, 5, 5+$font.h*4)
+	print("gfxbin Name ", $win[$wgfx].surf, 5, 5+$font.h*2)
+	print("Size    Angle     Frame", $win[$wgfx].surf, 5, 5+$font.h*5)
 	$win[$wgfx].drawbackup()
 EndFunc
 
 func drawgfxwindow()
 	_SDL_SetAlpha($win[$wgfx]._surf, $_SDL_SRCALPHA, 255)
 	_SDL_BlitSurface($win[$wgfx]._surf, 0, $win[$wgfx].surf, 0)
-	print($gfxcur&" / "&$gfxs, $win[$wgfx].surf, 4*$font.w+5, 5)
-	print($gfx[$gfxcur].name, $win[$wgfx].surf, 5*$font.w+5, 5+$font.h)
-	print("       x "&$gfx[$gfxcur].x&" y "&$gfx[$gfxcur].y&" w "&$gfx[$gfxcur].w&" h "&$gfx[$gfxcur].h, $win[$wgfx].surf, 5, 5+$font.h*2)
-	print("adjust x "&$gfx[$gfxcur].adjust.x&" y "&$gfx[$gfxcur].adjust.y, $win[$wgfx].surf, 5, 5+$font.h*3)
-	print($gfx[$gfxcur].scale&"       "&$gfx[$gfxcur].angle&"         "&$gfx[$gfxcur].frame, $win[$wgfx].surf, 5, 5+$font.h*5)
+	print($gfxcur&" / "&$gfxs, $win[$wgfx].surf, 4*$font.w+5, 5);gfx cur and max lable
+	print($gfx[$gfxcur].name, $win[$wgfx].surf, 5*$font.w+5, 5+$font.h);gfxname lable
+	print($gfx[$gfxcur].binname, $win[$wgfx].surf, 13*$font.w+5, 5+$font.h*2);binname lable
+	print("       x "&$gfx[$gfxcur].x&" y "&$gfx[$gfxcur].y&" w "&$gfx[$gfxcur].w&" h "&$gfx[$gfxcur].h, $win[$wgfx].surf, 5, 5+$font.h*3);location and size lables
+	print("adjust x "&$gfx[$gfxcur].adjust.x&" y "&$gfx[$gfxcur].adjust.y, $win[$wgfx].surf, 5, 5+$font.h*4)
+	print($gfx[$gfxcur].scale&"       "&$gfx[$gfxcur].angle&"         "&$gfx[$gfxcur].frame, $win[$wgfx].surf, 5, 5+$font.h*6)
+
+	;debug
+	print("binID "&$gfx[$gfxcur].binid, $win[$wgfx].surf, 5, 5+$font.h*8)
+	print("gfxbinID "&$gfxbindata[$gfx[$gfxcur].binid].binid, $win[$wgfx].surf, 5, 5+$font.h*9)
 EndFunc
 
 func drawmousewindow()
@@ -176,7 +182,7 @@ func drawsourcewindow()
 EndFunc
 
 func makehelpwindow()
-	$win[$whelp].makewindow(0, $screenw-310, 410, 300, 160, 155, 15, -1, 1, 1, 1);keyboard controls
+	$win[$whelp].makewindow(0, $screenw-310, $screenh-185, 300, 160, 155, 15, -1, 1, 1, 1);keyboard controls
 	print("Tip: ", $win[$whelp].surf, 5, 5, 255, 255, 0)
 	print("Right-Click", $win[$whelp].surf, 5, $win[$whelp].h-$font.h*4, 0, 255, 255)
 	print(" -window to change field", $win[$whelp].surf, 25, $win[$whelp].h-$font.h*3, 0, 255, 255)

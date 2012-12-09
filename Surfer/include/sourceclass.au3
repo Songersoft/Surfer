@@ -1,7 +1,8 @@
 #include-once
 #include "..\..\include lib\SDL_Template.au3"
+#include "surfer.h.au3"
 #include "surfer.global.au3"
-global $sourcemax= 80, $source[$sourcemax], $sources= 0, $sourcecur= 0
+;global $sourcemax= 80, $source[$sourcemax], $sources= 0, $sourcecur= 0
 
 ;global $surfbinsa[$surfbinmax][$surfbinsizemax][$surfbinanglemax]
 ;global $surfbindata[$surfbinmax][$surfbinanglemax][$surfbinframemax]
@@ -64,9 +65,7 @@ func sourceo_copy($os, $target)
 	;dim $a[$sourceclassdatamax]
 	_SDL_FreeSurface($os.surf)
 	$os.surf= 0
-	out("os.surf "&$os.surf)
 	$os.surf= _SDL_DisplayFormat($target.surf)
-	out("1")
 	$os.filew= $target.filew
 	$os.fileh= $target.fileh
 	$os.filepath= $target.filepath
@@ -176,13 +175,9 @@ func sourceo_resize($os, $resizew, $resizeh)
 EndFunc
 
 func sourceo_zoom($os)
-	out("Zoom")
 	local $xx= 0, $yy= 0
-	out($os.filew*$os.scale)
-	out($os.fileh*$os.scale)
 	$newsurf= _SDL_CreateRGBSurface($_SDL_SWSURFACE, $os.filew*$os.scale, $os.fileh*$os.scale, 32, 0, 0, 0, 255)
 	;$newsurf= _SDL_CreateRGBSurface($_SDL_SWSURFACE, 32, 32, 32, 0, 0, 0, 255)
-	out(@error)
 	if $newsurf<> 0 then
 		for $y= 0 to $os.fileh
 			for $x= 0 to $os.filew
@@ -196,7 +191,6 @@ func sourceo_zoom($os)
 		next
 		if $os.win.surf<> 0 then _SDL_FreeSurface($os.win.surf)
 		$os.win.surf= 0
-		out("newsurf freed")
 		$os.win.surf= _SDL_DisplayFormat($newsurf)
 		if $os.colorkeyuse= 1 then
 			$r= _colorgetred($os.colorkey)
@@ -214,7 +208,6 @@ func sourceo_zoom($os)
 EndFunc
 
 func sourceo_savesurf($os)
-	;out("fromsource "&$os.fromsource)
 	;local $w= 0, $h= 0
 	;surfget($os.surf, $w, $h)
 	;local $scalew= 0, $scaleh= 0
@@ -240,7 +233,6 @@ func sourceo_savesurf($os)
 	;$srect= _SDL_Rect_Create(1, 1, $w+2, $h+2)
 	;$rect= _SDL_Rect_Create($os.fromx, $os.fromy, $w, $h)
 	;_SDL_BlitSurface($newsurf, $srect, $os.surf, 0)
-	;out("fromx "&$os.fromx)
 	;_SDL_BlitSurface($os.surf, 0, $source[0].surf, $rect)
 EndFunc
 

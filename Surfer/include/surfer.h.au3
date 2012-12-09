@@ -4,12 +4,10 @@
 #include "surfer.global.au3"
 func musicmakelist()
 	;if FileExists($musicfolder) then beep()
-	;out($playlistfolder)
 	;_RecFileListToArray($sInitialPath, $sInclude_List = "*", $iReturn = 0, $iRecur = 0, $iSort = 0, $iReturnPath = 1, $sExclude_List = "", $sExclude_List_Folder = "")
 	$musicfilecur= -1
 	$musicfile= _RecFileListToArray($musicfolder, "*.mid;*.midi;*.mp3", 1, 0, 0, 1)
 	if isarray($musicfile) then
-		;out("files "&$musicfile[0])
 		if $musicfile[0]> $musicfilemax-1 then
 			$musicfiles= $musicfilemax-1
 		else
@@ -17,12 +15,11 @@ func musicmakelist()
 		endif
 		redim $musicfile[$musicfiles]
 		_ArrayRandom($musicfile, 1)
-		for $i= 0 to $musicfiles-1
-			out($i&" "&$musicfile[$i])
-		next
+		;for $i= 0 to $musicfiles-1
+			;
+		;next
 		$musicfilecur= 1
 	endif
-	;out("$musicfilecur "&$musicfilecur)
 EndFunc;musicmakelist
 
 Func _ArrayShuffle($a_arr, $i_lb = 0)
@@ -64,87 +61,6 @@ func controls()
 		$redraw= 1
 		$selection[$selectioncur].x= -10000
 	endif
-	if _ispressed("4D") then;if holding 'm'
-		;update mouse window
-		drawmousewindow()
-		$redraw= 1
-		if _ispressed(74) then
-			keyreleased(74)
-			choosemusicfolder()
-		endif
-		if _ispressed(73) then
-			if $musicfilecur> -1 then
-				keyreleased(73)
-				musicplay()
-			endif
-		endif
-		if _ispressed(4) then musicnext();mouse button 3 play next
-		if _ispressed(76) then _soundstop($sound);F7 stop
-		if _ispressed(77) then
-			if _soundstatus($sound)= "playing" then
-				_soundpause($sound);F8 pause/play
-			else
-				_soundresume($sound)
-			endif
-			keyreleased(77)
-		endif
-		if _ispressed(78) then;F9 play last
-			if $musicfilecur> -1 then
-				keyreleased(78)
-				$musicfilecur-= 2
-				if $musicfilecur< 0 then $musicfilecur= 0
-				musicnext()
-			endif
-		endif
-		if _ispressed(79) then;F10 seek backwards
-			if $musicfilecur> -1 then
-				keyreleased(79)
-				$musicseek= _SoundPos($sound, 1)
-				out($musicseek)
-				$musicseek= stringsplit($musicseek, ":")
-				$musicseek[3]-= $soundseekinc
-				;out($musicseek[0]&$musicseek[1]&$musicseek[2])
-				if $musicseek[3]< 0 then
-					$musicseek[3]+= 59
-					$musicseek[2]-= 1
-					if $musicseek[2]< 0 then
-						$musicseek[2]+= 59
-						$musicseek[1]-= 1
-						if $musicseek[1]< 0 then
-							$musicseek[1]= 0
-						endif
-					endif
-				endif
-				out("musicseek[3]"&$musicseek[3])
-				_SoundSeek($sound, $musicseek[1], $musicseek[2], $musicseek[3])
-				_soundplay($sound)
-			endif
-		endif;end if seek backward
-		if _ispressed("7A") then;F10 seek forward
-			if $musicfilecur> -1 then
-				keyreleased("7A")
-				$musicseek= _SoundPos($sound, 1)
-				out($musicseek)
-				$musicseek= stringsplit($musicseek, ":")
-				$musicseek[3]+= $soundseekinc
-				;out($musicseek[0]&$musicseek[1]&$musicseek[2])
-				if $musicseek[3]> 59 then
-					$musicseek[3]-= 59
-					$musicseek[2]+= 1
-					if $musicseek[2]> 59 then
-						$musicseek[2]-= 59
-						$musicseek[1]+= 1
-						if $musicseek[1]> 11 then
-							$musicseek[1]= 0
-						endif
-					endif
-				endif
-				out("musicseek[3]"&$musicseek[3])
-				_SoundSeek($sound, $musicseek[1], $musicseek[2], $musicseek[3])
-				_soundplay($sound)
-			endif
-		endif;end if seek forward
-	endif
 
 	if _ispressed(54) then;toggle selectioncur, source or screen
 		keyreleased(54)
@@ -184,10 +100,7 @@ func controls()
 		if _ispressed(50) then
 			if _ispressed(26) then
 				$gfx[$gfxcur].angle= $gfx[$gfxcur].angle+ 1;angle up
-				out("$gfx[$gfxcur].angle "&$gfx[$gfxcur].angle)
 				if $gfx[$gfxcur].angle> $gfxbinanglemax-1 then $gfx[$gfxcur].angle= 0
-				out("$gfx[$gfxcur].angle "&$gfx[$gfxcur].angle)
-				out("surf "&$gfxbin[$gfx[$gfxcur].binid][0][$gfx[$gfxcur].angle][0])
 				if $gfxbin[$gfx[$gfxcur].binid][0][$gfx[$gfxcur].angle][0]= "" then
 					$ii= 0
 					for $i= $gfx[$gfxcur].angle to $gfxbinanglemax-1
@@ -372,7 +285,7 @@ func controls()
 		if _ispressed(46) then;46 f; to - - - - - - - - - - MIX DOWN FLATTEN SAVE SELECTION
 			$redraw= 1
 			if $sourcecur< $sourcemax and $source[$sourcecur].fromx> -100 then $source[$sourcecur].savesurf()
-			out("in")
+			out("mixed down")
 		endif
 		releasekeys();11 ctrl, when held incroment changes by 1 until key released
 	endif;- - END Holding CTRL
@@ -419,40 +332,28 @@ func controls()
 						$sy= $qy*-1
 						$dy= 0
 					endif
+					;draw the small one
+					$srect= _SDL_Rect_Create($sx/$source[$sourcecur].scale, $sy/$source[$sourcecur].scale, ($source[$sourcecur].win.w+$dx)/$source[$sourcecur].scale, ($source[$sourcecur].win.h+$dy)/$source[$sourcecur].scale)
+					$drect= _SDL_Rect_Create($dx/$source[$sourcedest].scale, $dy/$source[$sourcedest].scale, ($source[$sourcedest].win.w+$dx)/$source[$sourcedest].scale, ($source[$sourcedest].win.h+$dy)/$source[$sourcedest].scale)
+					_SDL_BlitSurface($source[$sourcecur].surf, $srect, $source[$sourcedest].surf, $drect);draw to source
+					;draw the big
 					$srect= _SDL_Rect_Create($sx, $sy, $source[$sourcedest].win.w+$dx, $source[$sourcedest].win.h+$dy)
 					$drect= _SDL_Rect_Create($dx, $dy, $source[$sourcedest].win.w+$dx, $source[$sourcedest].win.h+$dy)
-					_SDL_BlitSurface($source[$sourcecur].win.surf, $srect, $source[$sourcedest].surf, $drect);draw to source
 					_SDL_BlitSurface($source[$sourcecur].win.surf, $srect, $source[$sourcedest].win.surf, $drect);draw to source image window
+					;if $source[$sourcecur].scale> 1 then
+						;for $yy= 0 to $source[$sourcecur].
+					;_SDL_BlitSurface($source[$sourcecur].surf, $srect, $source[$sourcedest].surf, $drect);draw to source
+					;	beep()
+					;else
+						;$srect= _SDL_Rect_Create($sx, $sy, $source[$sourcedest].win.w+$dx, $source[$sourcedest].win.h+$dy)
+						;$drect= _SDL_Rect_Create($dx, $dy, $source[$sourcedest].win.w+$dx, $source[$sourcedest].win.h+$dy)
+						;_SDL_BlitSurface($source[$sourcecur].win.surf, $srect, $source[$sourcedest].surf, $drect);draw to source
+					;endif
 				endif;endif valid source
 			endif;endif new point
 		else;not dragging
 			while _ispressed(20)
 				_SDL_GetMouseState($mousex, $mousey)
-				;if $mousex<> $lastdrawpoint.x or $mousey<> $lastdrawpoint.y then
-					;if $dragn> 0 then; DRAW SOURCE SURF
-	;~ 					$sourcedest= sourceoversource()
-	;~ 					if $sourcedest()> -1 then
-	;~ 						$qx= int($source[$sourcecur].win.x-$source[$sourcedest].win.x)
-	;~ 						$qy= int($source[$sourcecur].win.y-$source[$sourcedest].win.y)
-	;~ 						out("qx "&$qx)
-	;~ 						out("qy "&$qy)
-	;~ 						local $sx= 0, $sy= 0, $dx= 0, $dy= 0
-	;~ 						$dx= $qx
-	;~ 						$dy= $qy
-	;~ 						if $qx< 0 then
-	;~ 							$sx= $qx*-1
-	;~ 							$dx= 0
-	;~ 						endif
-	;~ 						if $qy< 0 then
-	;~ 							$sy= $qy*-1
-	;~ 							$dy= 0
-	;~ 						endif
-	;~ 						$srect= _SDL_Rect_Create($sx, $sy, $source[$sourcedest].win.w+$dx, $source[$sourcedest].win.h+$dy)
-	;~ 						$drect= _SDL_Rect_Create($dx, $dy, $source[$sourcedest].win.w+$dx, $source[$sourcedest].win.h+$dy)
-	;~ 						_SDL_BlitSurface($source[$sourcecur].win.surf, $srect, $source[$sourcedest].surf, $drect);draw to source
-	;~ 						_SDL_BlitSurface($source[$sourcecur].win.surf, $srect, $source[$sourcedest].win.surf, $drect);draw to source image window
-	;~ 					endif
-					;else; DRAW PEN
 						for $i= $sourcemax-1 to 0 step -1
 							if mouseoverrect($source[$i].win.x, $source[$i].win.y, $source[$i].win.w, $source[$i].win.h) then
 								$sourcecur= $i
@@ -485,6 +386,11 @@ func controls()
 		endif
 		$redraw= 1
 	endif;endif (SPACE)
+	if _ispressed("4D") then;if holding 'm'
+		;update mouse window
+		drawmousewindow()
+		$redraw= 1
+	endif
 	if _ispressed("6B") then $zoomchange= 1;np add; - - - - - - - - - - -- - ZOOM
 	if _ispressed("6D") and $source[$sourcecur].scale> 1 then $zoomchange= -1;(np-)
 	if $zoomchange<> 0 then
@@ -494,8 +400,6 @@ func controls()
 			$redraw= 1
 			$source[$sourcecur].scale= $source[$sourcecur].scale+ $zoomchange
 			$zoomchange= 0
-			out("sourcecur "&$sourcecur)
-			out("scale "&$source[$sourcecur].scale)
 			$source[$sourcecur].zoom()
 			;drawpenwindow()
 		endif
@@ -515,12 +419,10 @@ EndFunc;controls()
 
 func sourceoversource()
 	for $i= $sourcecur-1 to 0 step -1
-		out("i "&$i)
 		if $source[$sourcecur].win.x+$source[$sourcecur].win.w>= $source[$i].win.x then
 			if $source[$sourcecur].win.y+$source[$sourcecur].win.h>= $source[$i].win.y then
 				if $source[$sourcecur].win.x<= $source[$i].win.x+$source[$i].win.w then
 					if $source[$sourcecur].win.y<= $source[$i].win.y+$source[$i].win.h then
-						out("sourceoversource "&$i)
 						return $i
 					endif
 				endif
@@ -532,66 +434,34 @@ EndFunc;sourceoversource
 
 func changescreensize($width, $height)
 	;if $screen<> 0 then _SDL_FreeSurface($screen)
-	$screen= _SDL_SetVideoMode($width, $height, 0, $_SDL_SWSURFACE)
-	winmove($hgui, "", default, default, $width, $height)
-	surfget($screen, $screenw, $screenh)
+	;_SDL_SetVideoMode($screenw, $screenh, 0, bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE))
+	$screen= _SDL_SetVideoMode($width, $height, 0, bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE))
+	winmove($hgui, "", default, default, $width+$screenoffsets.x+6, $height+$screenoffsets.y+6)
+	;surfget($screen, $screenw, $screenh)
+	$screenw= $width
+	$screenh= $height
+	local $w= 0, $h= 0
+	surfget($screen, $w, $h)
+	out("true screen "&$w&" "&$h)
 	out("screen "&$screenw&" "&$screenh)
+	$noresize= 100
 	windowstoscreen()
 EndFunc;changescreensize
-
-;~ func rotateandsave($surf, $selection= "")
-;~ 	if $surf= 0 then
-;~ 		msgbox(0, "Error", "You need to load a picture to rotate, before rotating the picture.", $hgui)
-;~ 		return
-;~ 	endif
-;~ 	;declare
-;~ 	$rotationtype= 1
-;~ 	$newsurfw= 0
-;~ 	$newsurfh= 0
-;~ 	$scalex= 1
-;~ 	$scaley= 1
-;~ 	$px= $source[0].w/2
-;~ 	$py= $source[0].h/2
-;~ 	$qx= 32
-;~ 	$qy= 32
-;~ 	$newsize= sqrt(($source[0].w)*$source[0].w+($source[0].h)*$source[0].h);add to newsize if surface needs to be larger
-;~ 	$newsurf= _SDL_CreateRGBSurface($_SDL_SWSURFACE, $newsize, $newsize, 32, 0, 0, 0, 255)
-;~ 	_SDL_SetColorKey($newsurf, $_SDL_SRCCOLORKEY, $colorblack)
-;~ 	surfget($newsurf, $newsurfw, $newsurfh)
-;~ 	$drawrect= _SDL_Rect_Create(50, 50, $screenw/2, $screenh/2)
-;~ 	$aframe= 0
-;~ 	for $z= 1 to .10 step -$sizedecroment/100
-;~ 		for $a= 0 to 360 step $minanglechange
-;~ 			_SDL_FillRect($screen, 0, $bgcolor);clear the tank surface
-;~ 			_SDL_FillRect($newsurf, 0, $colorblack)
-;~ 			_sge_transform($surf, $newsurf, $anglestart+$a, $z, $z, $px, $py, $newsurfw/2, $newsurfh/2, 0)
-;~ 			_SDL_BlitSurface($newsurf, 0, $screen, $drawrect)
-;~ 			$savepath= $outputpath&"\"&$outputname&"\"&$aframe&".bmp"
-;~ 			out("sp "&$savepath)
-;~ 			;_SDL_SaveBMP($newsurf, $savepath)
-;~ 			_SDL_Flip($screen)
-;~ 			$aframe+= 1
-;~ 		next
-;~ 	next
-;~ 	_SDL_FreeSurface($newsurf)
-;~ EndFunc;end rotateandsave()
-
-;~ func chooseoutput()
-;~ 	$outputpath= @scriptdir&"\..\output"
-;~ 	$outputname= "default"
-;~ 	dircreate($outputpath&"\"&$outputname)
-;~ EndFunc;end chooseoutput()
 
 func adjustselection()
 	if _ispressed(11) then;ctrl
 		if _ispressed(41) then;41 'a' select all
 			$redraw= 1
-			for $i= 0 to $sources-1
+			for $i= 0 to $sourcesonscreen-1
 				if $source[$i].nameid= $selection[$selectioncur].sourceid then
 					$sourceid= $i
 					exitloop
 				endif
 			next
+			if $i= $sourcesonscreen then
+				$sourceid= $sourcecur
+				$selection[$selectioncur].sourceid= $source[$sourceid].nameid
+			endif
 			$selection[$selectioncur].x= 0
 			$selection[$selectioncur].y= 0
 			$selection[$selectioncur].w= $source[$sourceid].filew
@@ -668,45 +538,10 @@ func colorget($color, byref $r, byref $g, byref $b)
 	$b= DllStructGetData($color, 3)
 EndFunc;end rectget()
 
-func musicplay()
-	_soundclose($sound)
-	if $musicfilecur> -1 then
-		$filepath= $musicfolder&$musicfile[$musicfilecur]
-		if fileexists($filepath) then
-			$sound= _soundopen($filepath)
-			_soundplay($sound)
-		else;research music folder, on new fail quit search
-			musicmakelist()
-		endif
-		$redraw= 1
-	endif
-EndFunc;musicplay()
 
-func musicnext()
-	_soundclose($sound)
-	out("$musicfilecur "&$musicfilecur)
-	if $musicfilecur> -1 then
-		$musicfilecur+= 1
-		$filepath= $musicfolder&$musicfile[$musicfilecur]
-		if fileexists($filepath) then
-			$sound= _soundopen($filepath)
-			_soundplay($sound)
-		else;research music folder, on new fail quit search
-			musicmakelist()
-		endif
-		;$musicfilecur+= 1
-		if $musicfilecur> $musicfiles-1 then
-			musicmakelist()
-		endif
-		drawmusicwindow()
-		keyreleased(4)
-		$redraw= 1
-	endif
-EndFunc;musicnext()
 
 func getfolder($path)
 	$pathreturn= stringmid($path, 1, stringinstr($path, "\", 0, -1))
-	out("folder "&$pathreturn)
 	return $pathreturn
 EndFunc;getfolder()
 
@@ -734,6 +569,10 @@ func changeangle($ang, $anginc= -999)
 EndFunc
 
 func startup()
+	;
+	initSDLTemplate(@scriptdir&"\..\system\Fonts\qbasic_font1.txt")
+	$screen= _SDL_SetVideoMode($screenw, $screenh, 0, bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE))
+	surfget($screen, $screenw, $screenh)
 	for $i= 0 to $poselectionmax-1
 		$poselection[$i]= pointobject()
 		$poselection[$i].set(0, 0)

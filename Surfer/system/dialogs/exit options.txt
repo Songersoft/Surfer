@@ -1,0 +1,113 @@
+0
+control 0
+1
+10
+Confirm
+335
+300
+55
+20
+
+
+400
+
+
+
+
+
+control 1
+6
+10
+Do you want to save workspace?
+10
+40
+
+400
+
+220
+20
+
+
+
+
+
+control 2
+6
+10
+Do you want to save changes to images?
+10
+150
+
+400
+
+260
+20
+
+
+
+
+
+control 3
+6
+10
+Save gfx bin data?
+10
+260
+
+400
+
+340
+20
+
+
+
+
+
+control 4
+5
+10
+Saving the workspace results in Surfer remembering the positions, images, colorkey, ext of sources currently loaded. The saved workspace will be loaded next time Surfer starts up.
+10
+65
+380
+70
+
+400
+
+
+
+1
+
+
+control 5
+5
+10
+This will save any changes you have made to a source image.  Saved changes are copied into the workspace folder and will not overwrite the original source file. unless the source file came from a workspace already.
+10
+175
+380
+70
+
+400
+
+
+
+1
+
+
+control 6
+0
+10
+You are ABOUT to EXIT the PROGRAM
+10
+10
+250
+20
+
+
+400
+
+
+
+
+

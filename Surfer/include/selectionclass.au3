@@ -1,6 +1,7 @@
 #include-once
 #include "..\..\include lib\SDL_Template.au3"
-#include "surfer.h.au3"
+#include "sourceclass.au3"
+#include "surfer.global.au3"
 ;__default__ object startip function
 func selectionobject($iStartup = False)
 	local $oObj = _AutoItObject_Create()
@@ -119,5 +120,4 @@ func selectiono_towindow($os)
 	sourcenextname($sources, 1);give the new source a unique name
 	sourceadd()
 	if $surf<> 0 then _SDL_FreeSurface($surf)
-	out("left function")
 EndFunc

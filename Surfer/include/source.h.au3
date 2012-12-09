@@ -1,6 +1,7 @@
 #include-once
 #include "..\..\include lib\SDL_Template.au3"
-#include "surfer.h.au3"
+#include "sourceclass.au3"
+#include "surfer.global.au3"
 func choosesource()
 	$endpath= stringinstr($sourcelastload, "\", 0, -1)
 	$path= stringmid($sourcelastload, 1, $endpath-1)
@@ -51,14 +52,14 @@ EndFunc
 ;make part of sourceclass
 
 
-func sourceloadtemplate($filedialog= 0)
+func sourceloadworkspace($filedialog= 0)
 	if $filedialog= 0 then
-		$filepath= @scriptdir&"\..\templates\lastsources.txt"
+		$filepath= @scriptdir&"\..\workspaces\lastsources.txt"
 	else
-		$endpath= stringinstr($sourcelasttemplate, "\", 0, -1)
-		$path= stringmid($sourcelasttemplate, 1, $endpath-1)
-		$name= stringmid($sourcelasttemplate, $endpath+1)
-		$filepath= fileopendialog("Load Source Template", $path, "txt (*.txt)", default, $name, $hgui)
+		$endpath= stringinstr($sourcelastworkspace, "\", 0, -1)
+		$path= stringmid($sourcelastworkspace, 1, $endpath-1)
+		$name= stringmid($sourcelastworkspace, $endpath+1)
+		$filepath= fileopendialog("Load Source Workspace", $path, "txt (*.txt)", default, $name, $hgui)
 	endif
 	$file= fileopen($filepath)
 	if $file<> -1 then
@@ -76,41 +77,40 @@ func sourceloadtemplate($filedialog= 0)
 			endif
 		wend
 		fileclose($file)
-		if $filedialog<> 0 then $sourcelasttemplate= $filepath
+		if $filedialog<> 0 then $sourcelastworkspace= $filepath
 		;$sourcesonscreen= $sources
 	endif
 	$redraw= 1
 EndFunc
 
-func sourcesavetemplate($filedialog= 0)
+func sourcesaveworkspace($filedialog= 0)
 	$savesurf= 0
 	$recordlastfolder= 0
 	if $filedialog= 0 then
 		$yesno= msgbox(3, "Save Workspace", "Automaticly save workspace, loaded next time you run this program", 0, $hgui)
 		if $yesno= 6 then
-			$filepath= @scriptdir&"\..\templates\lastsources\"
-			$yesno= msgbox(4, "Save Workspace", "Save source changes to file"&@CRLF&"changes are saved to the nameID in the template\lastsources folder", 0, $hgui)
+			;$filepath= @scriptdir&"\..\workspaces\lastsources\"
+			$yesno= msgbox(4, "Save Workspace", "Save source changes to file"&@CRLF&"changes are saved to the nameID in the Workspaces\lastsources folder", 0, $hgui)
 			if $yesno= 6 then
 				$savesurf= 1
 			endif
-			$filepath= @scriptdir&"\..\templates\lastsources.txt"
+			$filepath= @scriptdir&"\..\workspaces\lastsources.txt"
 		elseif $yesno= 2 then;cancel
 			return 0
 		elseif $yesno= 7 then
 			return 1
 		endif
 	else
-		$endpath= stringinstr($sourcelasttemplate, "\", 0, -1)
-		$path= stringmid($sourcelasttemplate, 1, $endpath-1)
-		$name= stringmid($sourcelasttemplate, $endpath+1)
-		$filepath= filesavedialog("Save Source Template", $path, "txt (*.txt)", default, $name, $hgui)
+		$endpath= stringinstr($sourcelastworkspace, "\", 0, -1)
+		$path= stringmid($sourcelastworkspace, 1, $endpath-1)
+		$name= stringmid($sourcelastworkspace, $endpath+1)
+		$filepath= filesavedialog("Save Source Workspace", $path, "txt (*.txt)", default, $name, $hgui)
 		if @error= 0 then
 			$ext= stringmid($filepath, stringlen($filepath)-3)
 			if $ext<> ".txt" then $filepath&= ".txt"
 			$recordlastfolder= 1
 			$savesurf= 1
 		else
-			out("cancel")
 			return -1
 		endif
 	endif
@@ -135,9 +135,9 @@ func sourcesavetemplate($filedialog= 0)
 		next
 	endif
 	fileclose($file)
-	if $recordlastfolder= 1 then $sourcelasttemplate= $filepath
+	if $recordlastfolder= 1 then $sourcelastworkspace= $filepath
 	return 1
-EndFunc;sourcesavetemplate()
+EndFunc;sourcesaveworkspace()
 
 func sourceadd()
 	$sourcesonscreen+= 1
@@ -150,14 +150,11 @@ func sourceremove($id= $sourcecur)
 	;loop
 	;wipe
 	;copy next
-	out("sources "&$sources)
-	out("sourcesonscreen "&$sourcesonscreen)
 	;$sourceobj= sourceobject()
 	;dim $sa[$sourceclassdatamax], $wa[$windowclassdatamax]
 	if $id> -1 and $id< $sourcesonscreen then
 		if $selection[0].sourceid= $source[$id].nameid then $selection[0].sourceid= -1
 		for $i= $id to $sourcesonscreen-1
-			out("idelete "&$i)
 			if $i< $sourcesonscreen-1 then
 				$source[$i].copysource($source[$i+1])
 			endif
@@ -171,7 +168,6 @@ func sourceremove($id= $sourcecur)
 		keyreleased("2E")
 		$redraw= 1
 	endif
-	out("done deleting")
 EndFunc;sourceremove()
 
 func sourcenextnameload()
@@ -256,12 +252,15 @@ func sourcecontextmenu($i)
 EndFunc
 
 func alinesources($srccur)
+	;find the differnace x of sources
 	for $i= 0 to $sourcesonscreen-1
 		if $i<> $srccur then
 			if $source[$i].win.x>= $source[$srccur].win.x and $source[$i].win.x<= ($source[$srccur].win.x+$source[$srccur].win.w) then
 				if $source[$i].win.y>= $source[$srccur].win.y and $source[$i].win.y<= ($source[$srccur].win.y+$source[$srccur].win.h) then
-					$x= mod($source[$i].win.x, $source[$srccur].scale)
+					$x= mod(($source[$i].win.x-$source[$srccur].win.x), $source[$srccur].scale)
+					$y= mod(($source[$i].win.y-$source[$srccur].win.y), $source[$srccur].scale)
 					$source[$i].win.x= $source[$i].win.x-$x
+					$source[$i].win.y= $source[$i].win.y-$y
 				endif
 			endif
 		endif

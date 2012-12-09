@@ -1,32 +1,33 @@
 
 #include "include\surfer.h.au3"
 
-$debug= 0;
+$debug= 0
+;
 _AutoItObject_Startup(0)
+$screenoffsets= pointobject()
+$screenoffsets.set(2, 48)
 $x= settingsload()
 sourcenextnameload()
-;if $x< 0 then
+if $x< 0 then
 	$screenw= 800
 	$screenh= 600
-;endif
+endif
 ;define the gui window and point _SDL_VideoMode() to it
-$hgui= guicreate(@scriptname, $screenw, $screenh, default, default, bitor($WS_MAXIMIZEBOX, $WS_SIZEBOX))
+$hgui= guicreate(@scriptname, $screenw+$screenoffsets.x, $screenh+$screenoffsets.y, default, default, bitor($WS_MAXIMIZEBOX, $WS_SIZEBOX))
 if $debug= 0 then EnvSet("SDL_WINDOWID", $hgui);remark this to create AutoIt window and recieve error messages from AutoIt
 ;mouse wheel
 _MouseSetOnEvent($MOUSE_WHEELSCROLLUP_EVENT, "MOUSE_WHELLSCROLL_UP", "", "", $hGUI)
 _MouseSetOnEvent($MOUSE_WHEELSCROLLDOWN_EVENT, "MOUSE_WHELLSCROLL_DOWN", "", "", $hGUI)
 guiregistermsg($WM_COMMAND, "_WM_COMMAND")
-opt("GUICloseOnESC"  , 0)
+opt("GUICloseOnESC", 0)
 ;init SDL libraries
 _SDL_Init_image()
 _SDL_Startup_sge()
 _SDL_Startup_sprig()
 _SDL_Init($_SDL_INIT_EVERYTHING)
 
-$screen= _SDL_SetVideoMode($screenw, $screenh, 0, bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE))
-surfget($screen, $screenw, $screenh)
-out("screen "&$screenw&" "&$screenh)
-initSDLTemplate(@scriptdir&"\..\system\Fonts\qbasic_font1.txt")
+;$screen= _SDL_SetVideoMode($screenw, $screenh, 0, bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE))
+;surfget($screen, $screenw, $screenh)
 
 startup()
 ;$source[0].undosurf[0]= 10
@@ -34,7 +35,7 @@ startup()
 ;$source[$sourcecur].undosurf[1]= 20
 ;load the last workspace
 
-sourceloadtemplate()
+sourceloadworkspace()
 ;out($source[$sourcecur].undosurf[0])
 ;out($source[$sourcecur].undosurf[0])
 _SDL_FillRect($screen, 0, $bgcolor);clear the tank surface
@@ -45,16 +46,18 @@ $menufileexit= guictrlcreatemenuitem("&exit", $menufile);file - exit
 $menusource= guictrlcreatemenu("Source")
 $menusourceload= guictrlcreatemenuitem("Load image", $menusource)
 $menusourcecreate= guictrlcreatemenuitem("Create image", $menusource)
-$menusourcetemplate= guictrlcreatemenu("Source Template", $menusource)
-$menusourcetemplateload= guictrlcreatemenuitem("Load Template", $menusourcetemplate)
-$menusourcetemplatesave= guictrlcreatemenuitem("Save Template", $menusourcetemplate)
+$menusourceworkspace= guictrlcreatemenu("Source Workspace", $menusource)
+$menusourceworkspaceload= guictrlcreatemenuitem("Load Workspace", $menusourceworkspace)
+$menusourceworkspacesave= guictrlcreatemenuitem("Save Workspace", $menusourceworkspace)
+$menusourcedeleteall= guictrlcreatemenuitem("Delete All", $menusource)
 $menugfx= guictrlcreatemenu("Gfx")
 $menugfxview= guictrlcreatemenuitem("View gfx data", $menugfx)
 $menugfxbin= guictrlcreatemenu("gfxBin", $menugfx)
 $menugfxbinrotate= guictrlcreatemenuitem("Store rotated frames", $menugfxbin)
 ;$menusourcesurfbinaddsizerotate= guictrlcreatemenuitem("add scaled rotate object", $menusourcesurfbin)
 $menugfxbinview= guictrlcreatemenuitem("View stored frames", $menugfxbin)
-$menusourcedeleteall= guictrlcreatemenuitem("Delete All", $menusource)
+$menugfxbinload= guictrlcreatemenuitem("Load a gfxbin", $menugfxbin)
+$menugfxload= guictrlcreatemenuitem("Load gfx", $menugfx)
 $menuview= guictrlcreatemenu("View")
 $menuviewwindowsize= guictrlcreatemenuitem("Window size", $menuview)
 guisetstate()
@@ -64,7 +67,7 @@ makesourcewindow()
 makeselectionwindow()
 makemousewindow()
 makehelpwindow()
-makemusicwindow()
+;makemusicwindow()
 makegfxwindow()
 $zoom= 1
 $zoomchange= 0
@@ -73,14 +76,17 @@ drawpenwindow()
 drawsourcewindow()
 drawselectionwindow()
 drawhelpwindow()
-drawmusicwindow()
+;drawmusicwindow()
 drawgfxwindow()
 ;opt("MouseCoordMode", 2);mouse relative window
-$file= fileopen(@scriptdir&"\..\output\gfxbin\gfxdata.txt")
-while @error= 0
-	if $gfx[$gfxs].load($file)= 1 then exitloop
-wend
-fileclose($file)
+;$file= fileopen(@scriptdir&"\..\output\gfxbin\gfxdata.txt")
+;make a list of gfxnames to load, save in workspaces lastgfxs.txt
+;$file= fileopen(@scriptdir&"\..\workspaces\lastgfxs.txt)
+;do;this will load each name from lastgfxs.txt list
+;	if $gfx[$gfxs].load(filereadline($file))= 1 then exitloop
+;until @error<> 0
+;fileclose($file)
+;fileclose($file)
 $done= 0
 if $debug= 0 then; --- Main loop without debub
 while $done= 0;two loops allows cancel quit
@@ -92,10 +98,10 @@ while $done= 0;two loops allows cancel quit
 					exitloop
 				case $menufileexit
 					exitloop
-				case $menusourcetemplatesave
-					sourcesavetemplate(1)
-				case $menusourcetemplateload
-					sourceloadtemplate(1)
+				case $menusourceworkspacesave
+					sourcesaveworkspace(1)
+				case $menusourceworkspaceload
+					sourceloadworkspace(1)
 				case $menusourceload
 					choosesource()
 				case $menusourcecreate
@@ -106,8 +112,12 @@ while $done= 0;two loops allows cancel quit
 					gfxbinviewer()
 				case $menugfxview
 					gfxview()
+				case $menugfxbinload
+					gfxbinload()
+				case $menugfxload
+					gfxload()
 				case $menusourcedeleteall
-					if msgbox(3, "Remove all Sources", "Remove All Sources from workspace?")= 6 then
+					if msgbox(3, "Remove all Sources", "Remove All Sources from workspace?", default, $hgui)= 6 then
 						$redraw= 1
 						for $i= 0 to $sourcesonscreen-1
 							$source[$i].freesource()
@@ -125,17 +135,21 @@ while $done= 0;two loops allows cancel quit
 			;pullevent() I wanted to make an SDLKey k=SDL_GetKeyState(NULL);  It almost works take a look at getkeydialog() located in include\dialog.h.au3
 			if controls()= 1 then exitloop
 			$event= _SDL_PollEventEasy()
-			if isarray($event) then
-				if $event[0]= $_SDL_VIDEORESIZE then
-					$redraw= 1
-					out("resize event"&$event[1]&" "&$event[2])
-					$screenw= $event[1]+2
-					$screenh= $event[2]+48
-					_SDL_SetVideoMode($screenw, $screenh, 0, bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE))
-					;winmove($hgui, "", default, default, $screenw, $screenh)
-					windowstoscreen()
+			if $noresize< 1 then
+				if isarray($event) then
+					if $event[0]= $_SDL_VIDEORESIZE then
+						$redraw= 1
+						out("resize event"&$event[1]&" "&$event[2])
+						$screenw= $event[1]+2
+						$screenh= $event[2]+48
+						_SDL_SetVideoMode($screenw, $screenh, 0, bitor($_SDL_SWSURFACE, $_SDL_RESIZABLE))
+						;winmove($hgui, "", default, default, $screenw, $screenh)
+						windowstoscreen()
+					endif
 				endif
-			endif
+			else
+				$noresize-= 1
+			endif;endif $noresize= 1
 			if _ispressed(26) then;up
 				$redraw= 1
 				$sourcecur+= 1
@@ -185,7 +199,7 @@ while $done= 0;two loops allows cancel quit
 		;if _soundopen(
 	wend;end WHILE $done= 0
 	$done= 1
-	if $sourcesonscreen> 0 then $done= sourcesavetemplate()
+	if $sourcesonscreen> 0 then $done= exitdialog()
 wend;end WHILE $done= 0 double check to allow cancel quit
 else; --- Main loop with debug
 	while $done= 0;two loops allows cancel quit
@@ -197,10 +211,10 @@ else; --- Main loop with debug
 						exitloop
 					case $menufileexit
 						exitloop
-					case $menusourcetemplatesave
-						sourcesavetemplate(1)
-					case $menusourcetemplateload
-						sourceloadtemplate(1)
+					case $menusourceworkspacesave
+						sourcesaveworkspace(1)
+					case $menusourceworkspaceload
+						sourceloadworkspace(1)
 					case $menusourceload
 						choosesource()
 					case $menusourcecreate
@@ -211,6 +225,10 @@ else; --- Main loop with debug
 						gfxbinviewer()
 					case $menugfxview
 						gfxview()
+					case $menugfxbinload
+						gfxbinload()
+					case $menugfxload
+						gfxload()
 					case $menuviewwindowsize
 						$redraw= 1
 						choosescreensize()
@@ -222,7 +240,7 @@ else; --- Main loop with debug
 				if isarray($event) then
 					if $event[0]= $_SDL_VIDEORESIZE then
 						$redraw= 1
-						out("resize "&$event[1]&" "&$event[2])
+						;out("resize "&$event[1]&" "&$event[2])
 						$screenw= $event[1]
 						$screenh= $event[2]
 						_SDL_SetVideoMode($screenw, $screenh, 0, $videoflags)
@@ -259,22 +277,12 @@ else; --- Main loop with debug
 					_SDL_Flip($screen)
 				endif
 		wend;end WHILE $done= 0
-		out("done "&$done)
 		$done= 1
-		if $sourcesonscreen> 0 then $done= sourcesavetemplate()
+		if $sourcesonscreen> 0 then $done= exitdialog()
 	wend;end WHILE $done= 0 double check to allow cancel quit
 endif
 
-for $i= 0 to $gfxbins-1
-	$gfxbindata[$i].save()
-next
-if $gfxs> 0 then
-	$file= fileopen(@scriptdir&"\..\output\gfxbin\gfxdata.txt", 2);create data file
-	for $i= 0 to $gfxs-1
-		$gfx[$i].save($file)
-	next
-	fileclose($file)
-endif
+
 ;EnvSet must be set for this to be called
 ;or close the debug window
 $file= fileopen(@scriptdir&"\..\system\settings.txt", 2)
@@ -290,4 +298,4 @@ _SDL_Quit()
 _SDL_Shutdown_sprig()
 _SDL_Shutdown_sge()
 _SDL_Shutdown_image()
-
+out("Terminator")
